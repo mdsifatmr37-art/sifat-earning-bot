@@ -7,41 +7,95 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: sans-serif; background: #0b0b0b; color: white; margin: 0; text-align: center; }
-        .header { padding: 40px 20px; background: #1a1a1a; border-bottom: 2px solid #f39c12; }
-        #balance { font-size: 3em; color: #f39c12; font-weight: bold; }
-        .task-card { background: #161616; margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
-        .btn { background: #f39c12; color: black; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
-        .nav-item { color: #888; text-decoration: none; font-size: 12px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0b0b0b; color: white; margin: 0; text-align: center; padding-bottom: 80px; }
+        .header { padding: 40px 20px; background: linear-gradient(145deg, #1a1a1a, #111); border-bottom: 3px solid #f39c12; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2); }
+        #balance { font-size: 3.5em; color: #f39c12; font-weight: bold; text-shadow: 0 0 10px rgba(243, 156, 18, 0.5); }
+        .container { padding: 15px; }
+        .task-card { background: #161616; margin: 15px 0; padding: 20px; border-radius: 15px; border: 1px solid #333; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .task-card:hover { border-color: #f39c12; }
+        .btn { background: #f39c12; color: black; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #b9770e; }
+        .btn:active { transform: translateY(3px); box-shadow: none; }
+        .spin-section { background: #1a1a1a; padding: 20px; border-radius: 20px; margin-top: 20px; border: 2px dashed #f39c12; }
+        .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 100; }
+        .nav-item { color: #888; text-decoration: none; font-size: 12px; transition: 0.3s; }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 5px; }
+        .nav-item.active { color: #f39c12; }
     </style>
 </head>
 <body>
     <div class="header">
-        <div style="font-size: 0.9em; color: #888;">TOTAL BALANCE</div>
+        <div style="font-size: 1em; color: #aaa; letter-spacing: 1px;">MY TOTAL BALANCE</div>
         <div id="balance">0</div>
+        <div style="color: #f39c12; font-size: 0.8em; margin-top: 5px;">Coins</div>
     </div>
-    <div class="task-card">
-        <div style="text-align: left;"><b>Daily Reward</b><br><small style="color:#f39c12;">+50 Points</small></div>
-        <button class="btn" onclick="add(50)">Claim</button>
+
+    <div class="container">
+        <div class="spin-section">
+            <h3 style="margin-top:0;"><i class="fas fa-轮盘"></i> Lucky Spin</h3>
+            <p id="spin-msg" style="font-size: 0.9em; color: #ccc;">Try your luck once a day!</p>
+            <button class="btn" id="spin-btn" onclick="spinWheel()">SPIN NOW</button>
+        </div>
+
+        <div class="task-card">
+            <div style="text-align: left;"><b>Daily Check-in</b><br><small style="color:#f39c12;">+50 Points</small></div>
+            <button class="btn" onclick="addPoints(50, 'Daily Reward')">Claim</button>
+        </div>
+
+        <div class="task-card" style="border-left: 4px solid #0088cc;">
+            <div style="text-align: left;"><b>Telegram Channel</b><br><small style="color:#0088cc;">Join for Updates</small></div>
+            <button class="btn" style="background:#0088cc;" onclick="window.open('https://t.me/Referincome6427')">Join</button>
+        </div>
+        
+        <div class="task-card">
+            <div style="text-align: left;"><b>Withdrawal</b><br><small style="color:#27ae60;">Min: 5000 Coins</small></div>
+            <button class="btn" style="background:#27ae60;" onclick="showWithdraw()">Cash Out</button>
+        </div>
     </div>
-    <div class="task-card">
-        <div style="text-align: left;"><b>Join Channel</b><br><small style="color:#f39c12;">+100 Points</small></div>
-        <button class="btn" onclick="window.open('https://t.me/Referincome6427')">Join</button>
-    </div>
+
     <nav class="nav">
-        <a href="#" class="nav-item">HOME</a>
-        <a href="https://t.me/Referincome6427" class="nav-item">SUPPORT</a>
+        <a href="#" class="nav-item active"><i class="fas fa-home"></i>HOME</a>
+        <a href="#" class="nav-item" onclick="alert('Invite link coming soon!')"><i class="fas fa-users"></i>FRIENDS</a>
+        <a href="https://t.me/Referincome6427" class="nav-item"><i class="fas fa-headset"></i>SUPPORT</a>
     </nav>
+
     <script>
-        let bal = localStorage.getItem('sifat_bal') || 0;
+        let bal = parseInt(localStorage.getItem('sifat_bal')) || 0;
         document.getElementById('balance').innerText = bal;
-        function add(n) {
-            bal = parseInt(bal) + n;
+
+        function addPoints(n, msg) {
+            bal += n;
+            saveData();
+            alert(msg + ' Added!');
+        }
+
+        function spinWheel() {
+            const btn = document.getElementById('spin-btn');
+            btn.disabled = true;
+            document.getElementById('spin-msg').innerText = "Spinning...";
+            
+            setTimeout(() => {
+                const win = Math.floor(Math.random() * 100) + 1;
+                bal += win;
+                saveData();
+                document.getElementById('spin-msg').innerText = "You won " + win + " Coins!";
+                btn.disabled = false;
+            }, 2000);
+        }
+
+        function showWithdraw() {
+            if(bal < 5000) {
+                alert("Minimum 5000 Coins required to withdraw!");
+            } else {
+                let num = prompt("Enter your Bikash/Nagad Number:");
+                if(num) alert("Request Sent! You will receive payment within 24 hours.");
+            }
+        }
+
+        function saveData() {
             localStorage.setItem('sifat_bal', bal);
             document.getElementById('balance').innerText = bal;
-            alert('Points Added!');
         }
+
         window.Telegram.WebApp.expand();
     </script>
 </body>
