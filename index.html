@@ -3,54 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sifat Earning App</title>
+    <title>Sifat Earning Pro</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 80%;
-        }
-        h1 { color: #0088cc; }
-        .balance { font-size: 24px; font-weight: bold; margin: 20px 0; }
-        button {
-            background-color: #0088cc;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 18px;
-            cursor: pointer;
-        }
+        body { font-family: sans-serif; background: #0b0b0b; color: white; margin: 0; text-align: center; }
+        .header { padding: 40px 20px; background: #1a1a1a; border-bottom: 2px solid #f39c12; }
+        #balance { font-size: 3em; color: #f39c12; font-weight: bold; }
+        .task-card { background: #161616; margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+        .btn { background: #f39c12; color: black; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
+        .nav-item { color: #888; text-decoration: none; font-size: 12px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Sifat Earning App</h1>
-        <div class="balance">Balance: <span id="points">0</span> Points</div>
-        <button onclick="earnPoints()">Click to Earn</button>
+    <div class="header">
+        <div style="font-size: 0.9em; color: #888;">TOTAL BALANCE</div>
+        <div id="balance">0</div>
     </div>
-
+    <div class="task-card">
+        <div style="text-align: left;"><b>Daily Reward</b><br><small style="color:#f39c12;">+50 Points</small></div>
+        <button class="btn" onclick="add(50)">Claim</button>
+    </div>
+    <div class="task-card">
+        <div style="text-align: left;"><b>Join Channel</b><br><small style="color:#f39c12;">+100 Points</small></div>
+        <button class="btn" onclick="window.open('https://t.me/Referincome6427')">Join</button>
+    </div>
+    <nav class="nav">
+        <a href="#" class="nav-item">HOME</a>
+        <a href="https://t.me/Referincome6427" class="nav-item">SUPPORT</a>
+    </nav>
     <script>
-        let points = 0;
-        function earnPoints() {
-            points += 10;
-            document.getElementById('points').innerText = points;
-            Telegram.WebApp.showAlert("Congratulations! You earned 10 points.");
+        let bal = localStorage.getItem('sifat_bal') || 0;
+        document.getElementById('balance').innerText = bal;
+        function add(n) {
+            bal = parseInt(bal) + n;
+            localStorage.setItem('sifat_bal', bal);
+            document.getElementById('balance').innerText = bal;
+            alert('Points Added!');
         }
-        Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
     </script>
 </body>
 </html>
