@@ -6,45 +6,22 @@
     <title>Sifat Earning Pro</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="//libtl.com/sdk.js" data-zone="10971120" data-sdk="show_10971120"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #0b0b0b; color: white; margin: 0; text-align: center; padding-bottom: 80px; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0b0b0b; color: white; margin: 0; text-align: center; padding-bottom: 70px; }
         .header { padding: 30px 20px; background: #1a1a1a; border-bottom: 3px solid #f39c12; }
         #balance { font-size: 3.5em; color: #f39c12; font-weight: bold; }
         .container { padding: 15px; }
-        .task-card { background: #161616; margin: 12px 0; padding: 18px; border-radius: 15px; border: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .btn { background: #f39c12; color: black; border: none; padding: 10px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        .ad-space { background: #222; margin: 15px 0; padding: 10px; border-radius: 10px; border: 1px solid #444; color: #888; font-size: 12px; }
-        .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
-  
-<!-- Add script to your app -->
-
-<html>
-    <head>
-        ...
-        <script src='//libtl.com/sdk.js' data-zone='10971120' data-sdk='show_10971120'></script>
-    </head>
-    ...
-</html>
-<!-- Add script to your app -->
-
-<html>
-    <head>
-        ...
-        <script src='//libtl.com/sdk.js' data-zone='10971120' data-sdk='show_10971120'></script>
-    </head>
-    ...
-</html>
-<!-- Add script to your app -->
-
-<html>
-    <head>
-        ...
-        <script src='//libtl.com/sdk.js' data-zone='10971120' data-sdk='show_10971120'></script>
-    </head>
-    ...
-</html>
+        .task-card { background: #161616; margin: 12px 0; padding: 18px; border-radius: 15px; border: 1px solid #333; text-align: left; }
+        .btn { background: #f39c12; color: black; border: none; padding: 10px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        .ad-space { background: #222; margin: 15px 0; padding: 10px; border-radius: 10px; border: 1px dashed #444; color: #888; }
+        .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #333; }
+        .nav a { color: #f39c12; text-decoration: none; font-size: 0.8em; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; background: #333; color: white; border: 1px solid #444; box-sizing: border-box; }
+    </style>
 </head>
 <body>
+
     <div class="header">
         <div style="color: #888; font-size: 0.9em;">TOTAL EARNING</div>
         <div id="balance">0</div>
@@ -52,205 +29,93 @@
     </div>
 
     <div class="container">
-        <div class="ad-space">
+        <div class="ad-space" id="main-ad">
             <p>ADVERTISEMENT</p>
-            </div>
+        </div>
 
         <div class="task-card">
-            <div style="text-align: left;"><b>Daily Bonus</b><br><small style="color:#f39c12;">+50 Points</small></div>
+            <b>Daily Bonus</b> <br> <small style="color:#f39c12;">+50 Points</small>
             <button class="btn" onclick="addPoints(50, 'Daily Reward')">Claim</button>
         </div>
 
         <div class="task-card" style="border-left: 4px solid #0088cc;">
-            <div style="text-align: left;"><b>Watch Video Ads</b><br><small style="color:#0088cc;">+100 Points</small></div>
+            <b>Watch Video Ads</b> <br> <small style="color:#0088cc;">+100 Points</small>
             <button class="btn" style="background:#0088cc; color:white;" onclick="watchAd()">Watch</button>
         </div>
-<button class="btn" style="background:#2ecc71; color:white;" onclick="submitWithdraw()">Withdraw</button>
 
-      <button class="btn" style="background:#2ecc71; color:white;" onclick="submitWithdraw()">Withdraw</button>
- 
-    <select id="method" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; background: #333; color: white; border: none;">
-        <option value="Bkash">Bkash (বিকাশ)</option>
-        <option value="Nagad">Nagad (নগদ)</option>
-        <option value="Rocket">Rocket (রকেট)</option>
-    </select>
-
-    <label>অ্যাকাউন্ট নম্বর:</label>
-    <input type="number" id="phone" placeholder="017XXXXXXXX" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; background: #333; color: white; border: none;">
-
-    <label>টাকার পরিমাণ (BDT):</label>
-    <input type="number" id="amount" placeholder="Min 50" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; background: #333; color: white; border: none;">
-
-    <button onclick="submitWithdraw()" style="width: 100%; padding: 12px; background: #0088cc; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px;">Submit Request</button>
-</div>
-<script>
-function submitWithdraw() {
-    const method = document.getElementById('method').value;
-    const phone = document.getElementById('phone').value;
-    const amount = document.getElementById('amount').value;
-
-    if(phone.length < 11 || amount < 50) {
-        alert("সঠিক নম্বর এবং কমপক্ষে ৫০ টাকা লিখুন।");
-        return;
-    }
-
-    // এখানে ডাটা পাঠানোর সিস্টেম থাকবে
-    alert("আপনার " + amount + " টাকার রিকোয়েস্টটি " + method + " নম্বরে পাঠানো হয়েছে। ২৪ ঘণ্টার মধ্যে পেমেন্ট পাবেন।");
-}
-</script> class="btn" style="background:#2ecc71; color:white;" onclick="showWithdraw()">Withdraw</button>
+        <div class="task-card" style="border-left: 4px solid #2ecc71;">
+            <h3 style="margin-top:0;">Withdraw Money</h3>
+            <select id="method">
+                <option value="Bkash">Bkash (বিকাশ)</option>
+                <option value="Nagad">Nagad (নগদ)</option>
+                <option value="Rocket">Rocket (রকেট)</option>
+            </select>
+            <input type="number" id="phone" placeholder="017XXXXXXXX">
+            <input type="number" id="amount" placeholder="Min 5000 Coins">
+            <button class="btn" style="background:#2ecc71; color:white;" onclick="submitWithdraw()">Submit Withdraw</button>
         </div>
     </div>
 
     <nav class="nav">
-        <a href="#" style="color:#f39c12; text-decoration:none;"><i class="fas fa-home"></i><br>Home</a>
-        <a href="https://t.me/Referincome6427" style="color:#888; text-decoration:none;"><i class="fas fa-headset"></i><br>Support</a>
+        <a href="#"><i class="fas fa-home"></i><br>Home</a>
+        <a href="https://t.me/Referincome6427"><i class="fas fa-headset"></i><br>Support</a>
     </nav>
 
     <script>
         let bal = parseInt(localStorage.getItem('sifat_bal')) || 0;
         document.getElementById('balance').innerText = bal;
 
-        function addPoints(n, msg) {
-            bal += n;
-            saveData();
-            alert(msg + " Successful!");
-        }
-
-        function watchAd() {
-            alert("Loading Ad...");
-            // এখানে অ্যাড নেটওয়ার্কের কোড কাজ করবে
-            setTimeout(() => {
-                addPoints(100, "Ad View Reward");
-            }, 5000);
-        }
-
-        function showWithdraw() {
-            if(bal < 5000) {
-                alert("আপনার কমপক্ষে ৫০০০ কয়েন প্রয়োজন। বর্তমানে আপনার আছে: " + bal);
-            } else {
-                let number = prompt("বিকাশ বা নগদ নম্বর দিন:");
-                let amount = prompt("কত কয়েন তুলতে চান?");
-                if(number && amount) {
-                    alert("আপনার পেমেন্ট রিকোয়েস্টটি আমাদের কাছে পৌঁছেছে। ২৪ ঘণ্টার মধ্যে পেমেন্ট পাবেন।");
-                    // এখানে টেলিগ্রাম বটের মাধ্যমে আপনাকে মেসেজ পাঠানোর সিস্টেম করা যায়
-                }
-            }
-        }
-
         function saveData() {
             localStorage.setItem('sifat_bal', bal);
             document.getElementById('balance').innerText = bal;
         }
+
+        function addPoints(n, msg) {
+            if (msg === "Daily Reward") {
+                let lastClaim = localStorage.getItem('lastClaimDate');
+                let today = new Date().toDateString();
+                if (lastClaim === today) {
+                    alert("দুঃখিত! আপনি আজ বোনাস নিয়েছেন। আগামীকাল আবার চেষ্টা করুন।");
+                    return;
+                }
+                localStorage.setItem('lastClaimDate', today);
+            }
+            bal += n;
+            saveData();
+            alert(msg + " সফল হয়েছে!");
+        }
+
+        function watchAd() {
+            alert("বিজ্ঞাপন লোড হচ্ছে...");
+            
+            // Monetag বা অন্য এডের ডাইরেক্ট লিংক নিচে দিন
+            window.open('https://www.google.com', '_blank'); 
+
+            setTimeout(() => {
+                addPoints(100, "Ad View Reward");
+            }, 5000); 
+        }
+
+        function submitWithdraw() {
+            const method = document.getElementById('method').value;
+            const phone = document.getElementById('phone').value;
+            const amount = document.getElementById('amount').value;
+
+            if (bal < 5000) {
+                alert("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই (নূন্যতম ৫০০০ কয়েন)।");
+                return;
+            }
+            if (phone.length < 11 || amount < 1) {
+                alert("সঠিক নম্বর এবং অ্যামাউন্ট লিখুন।");
+                return;
+            }
+
+            alert("সফল হয়েছে!\n" + amount + " টাকার রিকোয়েস্টটি পেন্ডিং আছে।");
+            bal -= parseInt(amount); // অথবা আপনার ইচ্ছা অনুযায়ী ব্যালেন্স কমাতে পারেন
+            saveData();
+        }
+
         window.Telegram.WebApp.expand();
     </script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sifat Earning Pro</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #0b0b0b; color: white; margin: 0; text-align: center; padding-bottom: 80px; }
-        .header { padding: 30px 20px; background: #1a1a1a; border-bottom: 3px solid #f39c12; }
-        #balance { font-size: 3.5em; color: #f39c12; font-weight: bold; }
-        .container { padding: 15px; }
-        .task-card { background: #161616; margin: 12px 0; padding: 18px; border-radius: 15px; border: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .btn { background: #f39c12; color: black; border: none; padding: 10px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        .ad-space { background: #222; margin: 15px 0; padding: 10px; border-radius: 10px; border: 1px solid #444; color: #888; font-size: 12px; }
-        .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <div style="color: #888; font-size: 0.9em;">TOTAL EARNING</div>
-        <div id="balance">0</div>
-        <div style="color: #f39c12;">Coins</div>
-    </div>
-
-    <div class="container">
-        <div class="ad-space">
-            <p>ADVERTISEMENT</p>
-            </div>
-
-        <div class="task-card">
-            <div style="text-align: left;"><b>Daily Bonus</b><br><small style="color:#f39c12;">+50 Points</small></div>
-            <button class="btn" onclick="addPoints(50, 'Daily Reward')">Claim</button>
-        </div>
-
-        <div class="task-card" style="border-left: 4px solid #0088cc;">
-            <div style="text-align: left;"><b>Watch Video Ads</b><br><small style="color:#0088cc;">+100 Points</small></div>
-            <button class="btn" style="background:#0088cc; color:white;" onclick="watchAd()">Watch</button>
-        </div>
-
-        <div class="task-card" style="border-left: 4px solid #2ecc71;">
-            <div style="text-align: left;"><b>Withdraw Money</b><br><small style="color:#2ecc71;">Bikash/Nagad</small></div>
-            <button class="btn" style="background:#2ecc71; color:white;" onclick="showWithdraw()">Withdraw</button>
-        </div>
-    </div>
-
-    <nav class="nav">
- href="#" style="color:#f39c12; text-decoration:none;"><i class="fas fa-home"></i><br>Home</a>
-        <a href="https://t.me/Referincome6427" style="color:#888; text-decoration:none;"><i class="fas fa-headset"></i><br>Support</a>
-    
-        // ডেইলি বোনাস একবার করার জন্য ফাংশন
-    function addPoints(n, msg) {
-        let lastClaim = localStorage.getItem('lastClaimDate');
-        let today = new Date().toDateString();
-
-        if (msg === "Daily Reward" && lastClaim === today) {
-            alert("দুঃখিত! আপনি আজ অলরেডি বোনাস নিয়েছেন। আগামীকাল আবার চেষ্টা করুন।");
-            return;
-        }
-
-        bal += n;
-        if (msg === "Daily Reward") {
-            localStorage.setItem('lastClaimDate', today);
-        }
-        
-        saveData();
-        alert(msg + " সফল হয়েছে!");
-    }
-
-    // ভিডিও অ্যাড দেখার ফাংশন
-    function watchAd() {
-        alert("অ্যাড লোড হচ্ছে...");
-        
-        // এখানে আপনার আসল অ্যাড লিঙ্ক দিতে হবে (নিচে Monetag এর লিঙ্ক দেওয়ার নিয়ম দেখুন)
-        // window.open('
-<!-- Add script to your app -->
-
-<html>
-    <head>
-        ...
-        <script src='//libtl.com/sdk.js' data-zone='10971120' data-sdk='show_10971120'></script>
-    </head>
-    ...
-</html>', '_blank'); 
-
-        setTimeout(() => {
-            addPoints(100, "Ad View Reward");
-        }, 5000); // ৫ সেকেন্ড পর পয়েন্ট যোগ হবে
-    }
-
-    // উইথড্র সাবমিট ফাংশন
-    function submitWithdraw() {
-        const method = document.getElementById('method').value;
-        const phone = document.getElementById('phone').value;
-        const amount = document.getElementById('amount').value;
-
-        if (bal < 5000) { 
-            alert("আপনার কমপক্ষে ৫০০০ পয়েন্ট প্রয়োজন।");
-            return;
-        }
-
-        if (phone.length < 11 || amount < 1) {
-            alert("সঠিক নম্বর এবং অ্যামাউন্ট লিখুন।");
-            return;
-        }
-
-        alert("সফল হয়েছে!\n" + amount + " টাকার রিকোয়েস্টটি পেন্ডিং আছে।");
-    }
