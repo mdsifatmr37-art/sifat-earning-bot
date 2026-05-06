@@ -166,44 +166,16 @@ function submitWithdraw() {
     </div>
 
     <nav class="nav">
-        <a href="#" style="color:#f39c12; text-decoration:none;"><i class="fas fa-home"></i><br>Home</a>
+ href="#" style="color:#f39c12; text-decoration:none;"><i class="fas fa-home"></i><br>Home</a>
         <a href="https://t.me/Referincome6427" style="color:#888; text-decoration:none;"><i class="fas fa-headset"></i><br>Support</a>
-    </nav>
-
-    <script>
-        let bal = parseInt(localStorage.getItem('sifat_bal')) || 0;
-        document.getElementById('balance').innerText = bal;
-
-        function addPoints(n, msg) {
-            bal += n;
-            saveData();
-            alert(msg + " Successful!");
-        }
-
-        function watchAd() {
-            alert("Loading Ad...");
-            // এখানে অ্যাড নেটওয়ার্কের কোড কাজ করবে
-            setTimeout(() => {
-                addPoints(100, "Ad View Reward");
-            }, 5000);
-        <script>
-    // ব্যালেন্স লোড করা
-    let bal = parseInt(localStorage.getItem('sifat_bal')) || 0;
-    document.getElementById('balance').innerText = bal;
-
-    // ডাটা সেভ করার ফাংশন
-    function saveData() {
-        localStorage.setItem('sifat_bal', bal);
-        document.getElementById('balance').innerText = bal;
-    }
-
-    // ডেইলি বোনাস ফাংশন (লিমিটসহ)
+    
+        // ডেইলি বোনাস একবার করার জন্য ফাংশন
     function addPoints(n, msg) {
         let lastClaim = localStorage.getItem('lastClaimDate');
         let today = new Date().toDateString();
 
         if (msg === "Daily Reward" && lastClaim === today) {
-            alert("দুঃখিত! আপনি আজ অলরেডি বোনাস নিয়েছেন। আগামীকাল আবার আসুন।");
+            alert("দুঃখিত! আপনি আজ অলরেডি বোনাস নিয়েছেন। আগামীকাল আবার চেষ্টা করুন।");
             return;
         }
 
@@ -213,13 +185,16 @@ function submitWithdraw() {
         }
         
         saveData();
-        alert(msg + " সফল হয়েছে! আপনার একাউন্টে " + n + " পয়েন্ট যোগ হয়েছে।");
+        alert(msg + " সফল হয়েছে!");
     }
 
-    // ভিডিও অ্যাড ফাংশন
+    // ভিডিও অ্যাড দেখার ফাংশন
     function watchAd() {
-        alert("Loading Ad...");
-        // এখানে ভবিষ্যতে আসল অ্যাড নেটওয়ার্কের কোড বসবে
+        alert("অ্যাড লোড হচ্ছে...");
+        
+        // এখানে আপনার আসল অ্যাড লিঙ্ক দিতে হবে (নিচে Monetag এর লিঙ্ক দেওয়ার নিয়ম দেখুন)
+        // window.open('আপনার_অ্যাড_লিঙ্ক', '_blank'); 
+
         setTimeout(() => {
             addPoints(100, "Ad View Reward");
         }, 5000); // ৫ সেকেন্ড পর পয়েন্ট যোগ হবে
@@ -232,17 +207,14 @@ function submitWithdraw() {
         const amount = document.getElementById('amount').value;
 
         if (bal < 5000) { 
-            alert("আপনার কমপক্ষে ৫০০০ পয়েন্ট প্রয়োজন। বর্তমান পয়েন্ট: " + bal);
+            alert("আপনার কমপক্ষে ৫০০০ পয়েন্ট প্রয়োজন।");
             return;
         }
 
-        if (phone.length < 11 || amount < 50) {
-            alert("সঠিক মোবাইল নম্বর এবং কমপক্ষে ৫০ টাকা লিখুন।");
+        if (phone.length < 11 || amount < 1) {
+            alert("সঠিক নম্বর এবং অ্যামাউন্ট লিখুন।");
             return;
         }
 
-        alert("সফল হয়েছে!\nআপনার " + amount + " টাকার " + method + " রিকোয়েস্টটি পেন্ডিং আছে।");
+        alert("সফল হয়েছে!\n" + amount + " টাকার রিকোয়েস্টটি পেন্ডিং আছে।");
     }
-
-    window.Telegram.WebApp.expand();
-</script>
