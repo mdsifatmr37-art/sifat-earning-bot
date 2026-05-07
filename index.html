@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,27 +8,33 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="//libtl.com/sdk.js" data-zone="10971120" data-sdk="show_10971120"></script>
+    
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #0b0b0b; color: white; margin: 0; text-align: center; }
-        .page { display: none; padding-bottom: 80px; }
+        .page { display: none; padding-bottom: 80px; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
         .active-page { display: block; }
         
         /* Header */
         .header { padding: 30px 20px; background: #1a1a1a; border-bottom: 2px solid #f39c12; margin-bottom: 15px; }
-        #balance { font-size: 3em; color: #f39c12; font-weight: bold; }
+        #balance { font-size: 3.5em; color: #f39c12; font-weight: bold; }
 
-        /* Content */
+        /* Container & Cards */
         .container { padding: 15px; }
-        .card { background: #161616; margin: 12px 0; padding: 20px; border-radius: 15px; border: 1px solid #333; text-align: left; position: relative; }
-        .btn { background: #f39c12; color: black; border: none; padding: 12px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 16px; }
+        .card { background: #161616; margin: 12px 0; padding: 20px; border-radius: 15px; border: 1px solid #333; text-align: left; }
+        .btn { background: #f39c12; color: black; border: none; padding: 12px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 16px; transition: 0.3s; }
+        .btn:active { transform: scale(0.95); }
         
-        /* Bottom Nav */
-        .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; }
-        .nav-item { color: #888; text-decoration: none; font-size: 12px; cursor: pointer; }
-        .nav-item.active { color: #f39c12; }
-        .nav-item i { font-size: 20px; margin-bottom: 5px; }
+        /* Profile Specific */
+        .profile-icon { font-size: 60px; color: #f39c12; margin-bottom: 10px; }
+        .stat-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #222; }
 
-        /* Input Styles */
+        /* Bottom Nav */
+        .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; box-shadow: 0 -5px 15px rgba(0,0,0,0.5); }
+        .nav-item { color: #888; text-decoration: none; font-size: 12px; cursor: pointer; transition: 0.3s; }
+        .nav-item.active { color: #f39c12; }
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+
         input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; background: #222; color: white; border: 1px solid #444; box-sizing: border-box; }
     </style>
 </head>
@@ -36,18 +42,18 @@
 
     <div id="home" class="page active-page">
         <div class="header">
-            <div style="color: #888;">MY TOTAL BALANCE</div>
+            <div style="color: #888;">CURRENT BALANCE</div>
             <div id="balance">0</div>
             <div style="color: #f39c12;">Coins</div>
         </div>
         <div class="container">
             <div class="card">
-                <h3 style="margin:0;">Welcome, Sifat MR!</h3>
-                <p style="color:#888; font-size: 14px;">বিজ্ঞাপন দেখুন এবং টাকা আয় করুন সরাসরি বিকাশ বা নগদে।</p>
+                <h3 style="margin:0;">Hello, Sifat MR! 👋</h3>
+                <p style="color:#888; font-size: 14px;">কাজ শুরু করতে টাস্ক অপশনে যান এবং বিজ্ঞাপন দেখুন।</p>
             </div>
             <div class="card" style="border-left: 4px solid #f39c12;">
-                <b>Daily Bonus</b><br><small>প্রতিদিন একবার ক্লেইম করুন।</small>
-                <button class="btn" onclick="addPoints(50, 'Daily Reward')">Get 50 Coins</button>
+                <b>Daily Reward</b><br><small>Claim your free 50 coins every day.</small>
+                <button class="btn" onclick="addPoints(50, 'Daily Reward')">Claim Now</button>
             </div>
         </div>
     </div>
@@ -56,29 +62,50 @@
         <div class="header"><h3>Work Station</h3></div>
         <div class="container">
             <div class="card" style="border-left: 4px solid #0088cc;">
-                <b>Video Ads</b><br><small>আনলিমিটেড বিজ্ঞাপন দেখে আয় করুন।</small>
-                <button class="btn" style="background:#0088cc; color:white;" onclick="watchAd()">Watch & Earn 100</button>
+                <i class="fas fa-play-circle"></i> <b>Video Ads</b><br>
+                <small>Watch ads and earn 100 coins per view.</small>
+                <button class="btn" style="background:#0088cc; color:white;" onclick="watchAd()">Watch Ad</button>
             </div>
             <div class="card" style="border-left: 4px solid #9b59b6;">
-                <b>Smart Task</b><br><small>Special Ads for you.</small>
-                <button class="btn" style="background:#9b59b6; color:white;" onclick="watchAd()">Start Task</button>
+                <i class="fas fa-bolt"></i> <b>Fast Task</b><br>
+                <small>High speed ad loading for quick earn.</small>
+                <button class="btn" style="background:#9b59b6; color:white;" onclick="watchAd()">Start Fast Task</button>
             </div>
         </div>
     </div>
 
     <div id="withdraw" class="page">
-        <div class="header"><h3>Payment Method</h3></div>
+        <div class="header"><h3>Cash Out</h3></div>
         <div class="container">
             <div class="card">
-                <label>Select Method:</label>
+                <label>Method:</label>
                 <select id="method">
                     <option value="Bkash">Bkash (বিকাশ)</option>
                     <option value="Nagad">Nagad (নগদ)</option>
                     <option value="Rocket">Rocket (রকেট)</option>
                 </select>
-                <input type="number" id="phone" placeholder="Enter Phone Number">
-                <input type="number" id="amount" placeholder="Min 5000 Coins">
-                <button class="btn" style="background:#2ecc71; color:white;" onclick="submitWithdraw()">Withdraw Now</button>
+                <input type="number" id="phone" placeholder="Wallet Number">
+                <input type="number" id="amount" placeholder="Minimum 5000 Coins">
+                <button class="btn" style="background:#2ecc71; color:white;" onclick="submitWithdraw()">Withdraw Request</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="profile" class="page">
+        <div class="header">
+            <div class="profile-icon"><i class="fas fa-user-circle"></i></div>
+            <h3 style="margin:0;">User Profile</h3>
+        </div>
+        <div class="container">
+            <div class="card">
+                <div class="stat-row"><span>Name:</span> <strong>MD Sifat MR</strong></div>
+                <div class="stat-row"><span>User ID:</span> <strong>#SF9901</strong></div>
+                <div class="stat-row"><span>Status:</span> <strong style="color:#2ecc71;">Active</strong></div>
+                <div class="stat-row"><span>Refers:</span> <strong>0</strong></div>
+            </div>
+            <div class="card" style="text-align: center;">
+                <p style="color:#888;">Invite friends to earn bonus!</p>
+                <button class="btn" style="background:#444; color:white;" onclick="alert('Link Copied!')">Copy Invite Link</button>
             </div>
         </div>
     </div>
@@ -86,7 +113,8 @@
     <nav class="nav">
         <div class="nav-item active" onclick="showPage('home', this)"><i class="fas fa-home"></i><br>Home</div>
         <div class="nav-item" onclick="showPage('task', this)"><i class="fas fa-tasks"></i><br>Task</div>
-        <div class="nav-item" onclick="showPage('withdraw', this)"><i class="fas fa-wallet"></i><br>Withdraw</div>
+        <div class="nav-item" onclick="showPage('withdraw', this)"><i class="fas fa-wallet"></i><br>Wallet</div>
+        <div class="nav-item" onclick="showPage('profile', this)"><i class="fas fa-user"></i><br>Profile</div>
     </nav>
 
     <script>
@@ -109,17 +137,17 @@
             if (msg === "Daily Reward") {
                 let last = localStorage.getItem('lastClaim');
                 if (last === new Date().toDateString()) {
-                    alert("আজ অলরেডি নিয়েছেন!"); return;
+                    alert("আজকের বোনাস নেওয়া শেষ!"); return;
                 }
                 localStorage.setItem('lastClaim', new Date().toDateString());
             }
             bal += n;
             saveData();
-            alert(msg + " Successful!");
+            alert(msg + " Successful! +" + n + " Coins");
         }
 
         function watchAd() {
-            alert("বিজ্ঞাপন লোড হচ্ছে...");
+            alert("বিজ্ঞাপন লোড হচ্ছে... অনুগ্রহ করে ৫ সেকেন্ড অপেক্ষা করুন।");
             window.open('https://omg10.com/4/10971246', '_blank'); 
             setTimeout(() => { addPoints(100, "Ad Reward"); }, 5000); 
         }
@@ -127,9 +155,9 @@
         function submitWithdraw() {
             const phone = document.getElementById('phone').value;
             const amt = document.getElementById('amount').value;
-            if (bal < 5000 || amt < 5000) { alert("কমপক্ষে ৫০০০ পয়েন্ট লাগবে।"); return; }
+            if (bal < 5000 || amt < 5000) { alert("কমপক্ষে ৫০০০ পয়েন্ট প্রয়োজন।"); return; }
             if (phone.length < 11) { alert("সঠিক নম্বর দিন।"); return; }
-            alert("অনুরোধ পাঠানো হয়েছে! ২৪ ঘণ্টার মধ্যে পেমেন্ট পাবেন।");
+            alert("পেমেন্ট রিকোয়েস্ট সফল! ২৪ ঘণ্টার মধ্যে টাকা পাবেন।");
             bal -= parseInt(amt);
             saveData();
         }
