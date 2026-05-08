@@ -26,13 +26,13 @@
         .task-item i { font-size: 24px; margin-bottom: 8px; display: block; }
         .task-item span { font-size: 11px; font-weight: bold; }
 
-        /* Form */
+        /* Form Controls */
         .input-box { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #333; }
         input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: #0d0128; color: white; box-sizing: border-box; }
         .btn-confirm { width: 100%; padding: 15px; background: var(--primary); border: none; color: white; font-weight: bold; border-radius: 12px; cursor: pointer; }
 
         /* Nav Bar */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 1000; }
         .nav-link { color: #666; font-size: 11px; text-align: center; cursor: pointer; }
         .active-nav { color: var(--primary); }
 
@@ -46,7 +46,7 @@
         <div class="balance-card">
             <small>Available Balance</small>
             <div class="bal-txt" id="display-bal">$2.00</div>
-            <p style="font-size: 11px; color: #00ff88;">রেফার বোনাস: $3.00 | জয়েনিং: $2.00</p>
+            <p style="font-size: 11px; color: #00ff88;">জয়েনিং বোনাস: $2.00</p>
         </div>
 
         <div style="font-weight: bold; margin-bottom: 10px;">Select Task</div>
@@ -55,8 +55,21 @@
             <div class="task-item" onclick="handleTask('Telegram')"><i class="fa-brands fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
             <div class="task-item" onclick="handleTask('YouTube')"><i class="fa-brands fa-youtube" style="color:red"></i><span>YouTube</span></div>
             <div class="task-item" onclick="handleTask('TikTok')"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></div>
-            <div class="task-item" onclick="handleTask('Daily')"><i class="fa-solid fa-calendar-check" style="color:gold"></i><span>Daily Bonus</span></div>
+            <div class="task-item" onclick="showPage('refer')"><i class="fa-solid fa-users" style="color:#00ff88"></i><span>Refer</span></div>
             <div class="task-item" onclick="showPage('support')"><i class="fa-solid fa-headset" style="color:var(--primary)"></i><span>Support</span></div>
+        </div>
+    </div>
+
+    <div id="refer" class="page">
+        <h2 style="text-align: center;">Refer & Earn</h2>
+        <div class="input-box" style="text-align: center;">
+            <i class="fa-solid fa-gift" style="font-size: 50px; color: var(--primary); margin-bottom: 15px;"></i>
+            <p>আপনার বন্ধু একাউন্ট খুললে আপনি পাবেন <b>$3</b> এবং আপনার বন্ধু পাবে <b>$2</b> বোনাস!</p>
+            <div style="border: 2px dashed var(--primary); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                <small>Your Promo Code:</small>
+                <h3 style="letter-spacing: 2px; color: #00ff88;">SIFAT_MR_786</h3>
+            </div>
+            <button class="btn-confirm" style="margin-top: 20px;" onclick="alert('কোড কপি করা হয়েছে!')">Copy Code</button>
         </div>
     </div>
 
@@ -90,6 +103,7 @@
 
     <nav class="bottom-nav">
         <div class="nav-link active-nav" onclick="showPage('home')"><i class="fa-solid fa-house"></i><br>Home</div>
+        <div class="nav-link" onclick="showPage('refer')"><i class="fa-solid fa-user-plus"></i><br>Refer</div>
         <div class="nav-link" onclick="showPage('wallet')"><i class="fa-solid fa-wallet"></i><br>Wallet</div>
         <div class="nav-link" onclick="showPage('support')"><i class="fa-solid fa-headset"></i><br>Support</div>
     </nav>
@@ -101,11 +115,16 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.getElementById(id).classList.add('active-page');
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav'));
+            // নেভিগেশন বার আপডেট
+            const links = document.querySelectorAll('.nav-link');
+            if(id === 'home') links[0].classList.add('active-nav');
+            if(id === 'refer') links[1].classList.add('active-nav');
+            if(id === 'wallet') links[2].classList.add('active-nav');
+            if(id === 'support') links[3].classList.add('active-nav');
         }
 
         function handleTask(name) {
             alert(`@🇧🇩 Free Earning BD-তে আপনাকে স্বাগতম!\n\n${name} কাজ শুরু হচ্ছে...`);
-            
             let timeLeft = 15;
             const overlay = document.getElementById('ad-overlay');
             const display = document.getElementById('timer-sec');
@@ -117,7 +136,6 @@
                 if(timeLeft < 0) {
                     clearInterval(timer);
                     overlay.style.display = 'none';
-                    
                     if (typeof show_10979048 === 'function') {
                         show_10979048().then(() => { updateBalance(); });
                     } else {
@@ -141,9 +159,8 @@
             }
             if (amt > balance) { alert("পর্যাপ্ত ব্যালেন্স নেই!"); return; }
 
-            // পেমেন্ট রিকোয়েস্ট টেলিগ্রাম চ্যানেলে যাওয়ার জন্য ব্যাকএন্ডে এই আইডিটি কাজ করবে
             const token = "8731805358:AAG_JnStDiGKdzAOk6novNkdKz67yTECcnw";
-            const chat = "@Tech910erning"; 
+            const chat = "@Tech910erning";
             const msg = `🚀 NEW WITHDRAW\nAmt: $${amt}\nMethod: ${document.getElementById('method').value}\nNo: ${document.getElementById('num').value}`;
 
             fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent(msg)}`)
