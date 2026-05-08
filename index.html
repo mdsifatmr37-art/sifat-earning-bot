@@ -7,190 +7,207 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #ff00cc; --secondary: #3333ff; --bg: #0d0128; --card: #1a1a2e; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: white; margin: 0; padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
-        
-        .page { display: none; animation: fadeIn 0.3s; padding: 10px; }
+        :root {
+            --primary: #ff00cc;
+            --secondary: #3333ff;
+            --bg: #0d0128;
+            --card: #1a1a2e;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: white;
+            margin: 0;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+        .page { display: none; padding: 20px; animation: fadeIn 0.4s; }
         .active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* User Header */
-        .user-header { padding: 20px; display: flex; align-items: center; gap: 15px; }
-        .avatar { width: 55px; height: 55px; border-radius: 50%; background: #252545; border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Balance Card */
         .balance-card {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            margin: 10px; padding: 25px; border-radius: 25px; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
-        .balance-amount { font-size: 38px; font-weight: bold; margin: 5px 0; }
 
-        /* Work Grid */
-        .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px; }
-        .grid-item { background: var(--card); padding: 18px 10px; border-radius: 20px; text-align: center; border: 1px solid #ffffff0d; cursor: pointer; }
-        .grid-item i { font-size: 28px; margin-bottom: 8px; display: block; }
-        .grid-item span { font-size: 11px; color: #ccc; display: block; }
+        /* Form Styling */
+        .input-group {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #333;
+        }
+        label { display: block; margin-top: 15px; font-size: 14px; color: #ccc; }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 10px;
+            border: none;
+            background: #0d0128;
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #ff00cc, #3333ff);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            margin-top: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-        /* List Items (Support & History) */
-        .list-item { background: var(--card); margin: 10px 0; padding: 15px; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #ffffff0d; }
-        
-        /* Inputs for Withdraw */
-        .input-group { background: var(--card); padding: 20px; border-radius: 20px; margin-top: 15px; }
-        input, select { width: 92%; padding: 12px; margin-top: 10px; border-radius: 10px; border: none; background: #0d0128; color: white; outline: none; }
-        .submit-btn { width: 100%; padding: 15px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: bold; margin-top: 20px; cursor: pointer; }
-
-        /* Navigation */
-        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #111122; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 100; }
-        .nav-link { color: #666; text-decoration: none; font-size: 11px; text-align: center; background: none; border: none; }
+        /* Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #111;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            border-top: 1px solid #333;
+        }
+        .nav-link {
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
         .nav-link.active { color: var(--primary); }
+        
+        /* History Items */
+        .history-item {
+            background: var(--card);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+            border-left: 4px solid #ffcc00;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
 
-    <div id="home" class="page active-page">
-        <div class="user-header">
-            <div class="avatar"><i class="fas fa-user" style="color: var(--primary);"></i></div>
-            <div>Welcome, <b>sifat008</b> ✅</div>
-        </div>
+    <div id="wallet" class="page active-page">
+        <h2 style="text-align:center;">Withdraw Funds</h2>
+        
         <div class="balance-card">
-            <small style="opacity:0.8;">Available Balance</small>
-            <div class="balance-amount">$<span id="mainBalance">54.50</span></div>
-            <button onclick="showPage('wallet')" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:8px 20px; border-radius:10px; cursor:pointer;">Withdraw Now</button>
+            <small>Current Wallet Balance</small>
+            <h1 id="mainBal">$54.50</h1>
         </div>
-        <div class="work-grid">
-            <div class="grid-item" onclick="showRewardAd()">
-                <i class="fas fa-play-circle" style="color: #ffcc00;"></i>
-                <span>Watch Ads</span>
-                <small style="color:#4caf50;">$0.05</small>
-            </div>
-            <div class="grid-item" onclick="showPage('refer')">
-                <i class="fas fa-users" style="color: #a29bfe;"></i>
-                <span>Refer</span>
-            </div>
-            <div class="grid-item" onclick="showPage('support')">
-                <i class="fas fa-headset" style="color: #2ecc71;"></i>
-                <span>Support</span>
-            </div>
-        </div>
-    </div>
 
-    <div id="wallet" class="page">
-        <h3 style="text-align:center;">Withdraw Section</h3>
         <div class="input-group">
-            <label>Select Method:</label>
+            <label><i class="fas fa-university"></i> Payment Method:</label>
             <select id="method">
                 <option value="BKash">BKash (বিকাশ)</option>
                 <option value="Nagad">Nagad (নগদ)</option>
             </select>
-            <label style="display:block; margin-top:15px;">Number:</label>
+
+            <label><i class="fas fa-phone"></i> Account Number:</label>
             <input type="number" id="accountNumber" placeholder="017XXXXXXXX">
-            <label style="display:block; margin-top:15px;">Amount (Min $40):</label>
-            <input type="number" id="withdrawAmount" placeholder="Enter Dollar">
-            <button class="submit-btn" onclick="processWithdraw()">Submit Withdraw</button>
+
+            <label><i class="fas fa-dollar-sign"></i> Amount (Minimum $40):</label>
+            <input type="number" id="withdrawAmount" placeholder="Enter Amount (e.g. 40)">
+
+            <button class="submit-btn" onclick="sendWithdrawRequest()">Confirm Withdraw</button>
         </div>
-        <h4 style="margin-top:20px;">Payment History</h4>
+
+        <h4 style="margin-top:30px;">Transaction History</h4>
         <div id="paymentHistory">
-            <div class="list-item" id="noHistory"><span>No history yet</span></div>
-        </div>
-    </div>
-
-    <div id="refer" class="page">
-        <h3 style="text-align:center;">Invite Friends</h3>
-        <div style="background:var(--card); padding:30px; border-radius:20px; border:1px dashed var(--primary); text-align:center;">
-            <i class="fas fa-gift" style="font-size:50px; color:var(--primary);"></i>
-            <h2>Earn $3 Per Refer</h2>
-            <div style="background:#0d0128; padding:15px; border-radius:10px; margin:20px 0;">
-                <b id="promoCode" style="font-size:22px; color:var(--primary);">SIFAT_MR_786</b>
-            </div>
-            <button onclick="copyCode()" class="submit-btn">Copy Promo Code</button>
-        </div>
-    </div>
-
-    <div id="support" class="page">
-        <h3 style="text-align:center;">Contact Admin</h3>
-        <div class="list-item" onclick="window.open('https://t.me/Tech910erning')">
-            <div><i class="fab fa-telegram" style="color:#0088cc;"></i> Support Channel</div>
-            <i class="fas fa-chevron-right"></i>
-        </div>
-        <div class="list-item" onclick="window.open('https://www.youtube.com/@ItsMeSifatMr')">
-            <div><i class="fab fa-youtube" style="color:#ff0000;"></i> YouTube Subscribe</div>
-            <i class="fas fa-chevron-right"></i>
+            <p id="noHistory" style="color:#666; text-align:center;">No recent transactions.</p>
         </div>
     </div>
 
     <nav class="nav-bar">
-        <button class="nav-link active" onclick="showPage('home', this)"><i class="fas fa-home"></i><br>Home</button>
-        <button class="nav-link" onclick="showPage('home', this)"><i class="fas fa-tasks"></i><br>Work</button>
-        <button class="nav-link" onclick="showPage('wallet', this)"><i class="fas fa-wallet"></i><br>Wallet</button>
-        <button class="nav-link" onclick="showPage('support', this)"><i class="fas fa-headset"></i><br>Support</button>
+        <div class="nav-link" onclick="location.reload()"><i class="fas fa-home fa-lg"></i><br>Home</div>
+        <div class="nav-link active"><i class="fas fa-wallet fa-lg"></i><br>Wallet</div>
+        <div class="nav-link" onclick="alert('Support: @Tech910erning')"><i class="fas fa-headset fa-lg"></i><br>Support</div>
     </nav>
 
     <script>
-        let balance = parseFloat(localStorage.getItem('userBalance')) || 54.50;
-        document.getElementById('mainBalance').innerText = balance.toFixed(2);
+        // --- আপনার টেলিগ্রাম সেটিংস ---
+        const botToken = "8731805358:AAG_JnStDiGKdzAOk6novNkdKz67yTECcnw"; // আপনার নতুন বটের টোকেন
+        const chatId = "@Tech910erning"; // আপনার চ্যানেলের ইউজারনেম
+        let balance = 54.50; // ডামি ব্যালেন্স
 
-        function showPage(id, el) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(id).classList.add('active-page');
-            if(el) {
-                document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-                el.classList.add('active');
-            }
-        }
-
-        function showRewardAd() {
-            // Monetag Ad ID: 10979048
-            window.open("https://prmnode.com/pfe/current/tag.min.js?z=10979048", "_blank");
-            setTimeout(() => {
-                balance += 0.05;
-                updateBalance();
-                alert("অ্যাড সফলভাবে দেখেছেন! $0.05 আপনার ব্যালেন্সে যোগ হয়েছে।");
-            }, 4000);
-        }
-
-        function processWithdraw() {
-            const num = document.getElementById('accountNumber').value;
-            const amt = parseFloat(document.getElementById('withdrawAmount').value);
+        function sendWithdrawRequest() {
             const method = document.getElementById('method').value;
+            const number = document.getElementById('accountNumber').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
 
-            if (amt < 40) {
-                alert("দুঃখিত! ৪০ ডলারের নিচে উইথড্র দেওয়া সম্ভব নয়।");
+            // ১. ভ্যালিডেশন চেক
+            if (isNaN(amount) || amount < 40) {
+                alert("দুঃখিত! সর্বনিম্ন ৪০ ডলার উইথড্র দিতে হবে।");
                 return;
             }
-            if (amt > balance) {
-                alert("আপনার পর্যাপ্ত ব্যালেন্স নেই।");
+            if (amount > balance) {
+                alert("আপনার একাউন্টে পর্যাপ্ত ব্যালেন্স নেই।");
                 return;
             }
-            if (num.length < 10) {
-                alert("সঠিক নাম্বার দিন।");
+            if (number.length < 11) {
+                alert("অনুগ্রহ করে একটি সঠিক বিকাশ বা নগদ নাম্বার দিন।");
                 return;
             }
 
-            alert("আপনার উইথড্রো টি কনফার্ম হয়েছে এবং পেন্ডিং এ আছে। ২৪ ঘন্টা অথবা ৪৮ ঘন্টার মধ্যে আপনি আপনার পেমেন্ট পেয়ে যাবেন।");
-            
-            balance -= amt;
-            updateBalance();
-            
-            // Add to history
-            const hist = document.getElementById('paymentHistory');
+            // ২. টেলিগ্রাম নোটিফিকেশন মেসেজ তৈরি
+            const message = `🚀 *NEW WITHDRAW REQUEST*\n\n` +
+                            `👤 User ID: sifat008\n` +
+                            `💰 Amount: $${amount}\n` +
+                            `💳 Method: ${method}\n` +
+                            `📱 Number: ${number}\n` +
+                            `📅 Date: ${new Date().toLocaleString()}\n\n` +
+                            `✅ *Status: Pending*`;
+
+            // ৩. টেলিগ্রাম এ মেসেজ পাঠানো (API Call)
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+
+            fetch(url).then(response => {
+                if (response.ok) {
+                    alert("আপনার উইথড্রো রিকোয়েস্টটি সফলভাবে সাবমিট হয়েছে। আগামী ২৪ থেকে ৪৮ ঘণ্টার মধ্যে পেমেন্ট পেয়ে যাবেন।");
+                    
+                    // ব্যালেন্স আপডেট
+                    balance -= amount;
+                    document.getElementById('mainBal').innerText = `$${balance.toFixed(2)}`;
+
+                    // হিস্ট্রি আপডেট
+                    addHistory(amount, method, number);
+                } else {
+                    alert("এরর: বটটি আপনার চ্যানেলে অ্যাডমিন আছে কিনা চেক করুন।");
+                }
+            }).catch(err => {
+                alert("ইন্টারনেট কানেকশন চেক করুন।");
+            });
+        }
+
+        function addHistory(amt, meth, num) {
+            const historyDiv = document.getElementById('paymentHistory');
             document.getElementById('noHistory').style.display = 'none';
-            const item = `<div class="list-item" style="border-left:4px solid #ffcc00;">
-                <div><b>$${amt} (${method})</b><br><small>To: ${num}</small></div>
-                <b style="color:#ffcc00;">Pending</b>
-            </div>`;
-            hist.innerHTML = item + hist.innerHTML;
-        }
-
-        function updateBalance() {
-            document.getElementById('mainBalance').innerText = balance.toFixed(2);
-            localStorage.setItem('userBalance', balance);
-        }
-
-        function copyCode() {
-            navigator.clipboard.writeText("SIFAT_MR_786");
-            alert("Code Copied!");
+            const item = `
+                <div class="history-item">
+                    <div>
+                        <strong>$${amt.toFixed(2)} (${meth})</strong><br>
+                        <small style="color:#aaa;">Target: ${num}</small>
+                    </div>
+                    <span style="color:#ffcc00; font-weight:bold;">Pending</span>
+                </div>
+            `;
+            historyDiv.innerHTML = item + historyDiv.innerHTML;
         }
     </script>
+
 </body>
 </html>
