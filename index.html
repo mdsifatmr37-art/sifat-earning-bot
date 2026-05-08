@@ -3,126 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sifat Payment App</title>
-    
+    <title>Sifat Earning App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #0d0128;
-            color: white;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-        .balance-card {
-            background: linear-gradient(to right, #ff00cc, #3333ff);
-            padding: 30px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-        }
-        .input-group {
-            background: #1a1a2e;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: left;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-            color: #ccc;
-        }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin-top: 5px;
-            border-radius: 10px;
-            border: none;
-            background: #0d0128;
-            color: white;
-            box-sizing: border-box;
-        }
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(to right, #ff00cc, #3333ff);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #111;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-        }
-        .nav-link {
-            color: #666;
-            font-size: 12px;
-            text-decoration: none;
-        }
-        .active { color: #ff00cc; }
+        :root { --primary: #ff00cc; --secondary: #3333ff; --bg: #0d0128; --card: #1a1a2e; }
+        body { font-family: Arial, sans-serif; background: var(--bg); color: white; margin: 0; padding-bottom: 70px; text-align: center; }
+        .page { display: none; padding: 20px; animation: fadeIn 0.3s; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Balance Card */
+        .balance-card { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 25px; border-radius: 20px; margin-bottom: 20px; }
+        
+        /* Stats Box */
+        .stats-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-box { background: var(--card); padding: 15px; border-radius: 15px; border: 1px solid #333; }
+
+        /* Buttons */
+        .action-btn { width: 100%; padding: 15px; background: var(--card); color: white; border: 1px solid var(--primary); border-radius: 12px; margin-bottom: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .withdraw-btn { background: linear-gradient(to right, var(--primary), var(--secondary)); border: none; }
+
+        /* Form */
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: none; background: #0d0128; color: white; box-sizing: border-box; }
+        label { display: block; text-align: left; font-size: 13px; color: #ccc; margin-top: 10px; }
+
+        /* Nav Bar */
+        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; }
+        .nav-link { color: #666; font-size: 11px; text-decoration: none; cursor: pointer; }
+        .nav-link.active-nav { color: var(--primary); }
     </style>
 </head>
 <body>
 
-    <h2>Withdraw Funds</h2>
+    <div id="home-page" class="page active">
+        <h2>Sifat Earning App</h2>
+        <div class="balance-card">
+            <small>Total Balance</small>
+            <h1 id="user-bal">$54.50</h1>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-box"><h3>12</h3><small>Ads Watched</small></div>
+            <div class="stat-box"><h3>05</h3><small>Referrals</small></div>
+        </div>
 
-    <div class="balance-card">
-        <p>Current Wallet Balance</p>
-        <h1>$54.50</h1>
+        <h3>Daily Tasks</h3>
+        <button class="action-btn" onclick="showAd()"><i class="fa-solid fa-play"></i> Watch Video Ads</button>
+        <button class="action-btn" onclick="showAd()"><i class="fa-solid fa-rectangle-ad"></i> Daily Reward</button>
     </div>
 
-    <div class="input-group">
-        <label><i class="fa-solid fa-building-columns"></i> Payment Method:</label>
-        <select id="method">
-            <option value="BKash">BKash (বিকাশ)</option>
-            <option value="Nagad">Nagad (নগদ)</option>
-        </select>
+    <div id="wallet-page" class="page">
+        <h2>Withdraw Funds</h2>
+        <div class="balance-card">
+            <small>Current Wallet Balance</small>
+            <h1>$54.50</h1>
+        </div>
 
-        <label><i class="fa-solid fa-phone"></i> Account Number:</label>
-        <input type="number" id="accountNumber" placeholder="017XXXXXXXX">
+        <div style="background: var(--card); padding: 20px; border-radius: 15px; text-align: left;">
+            <label><i class="fa-solid fa-building-columns"></i> Payment Method:</label>
+            <select id="method">
+                <option value="BKash">BKash (বিকাশ)</option>
+                <option value="Nagad">Nagad (নগদ)</option>
+            </select>
 
-        <label><i class="fa-solid fa-dollar-sign"></i> Amount (Minimum $40):</label>
-        <input type="number" id="withdrawAmount" placeholder="Enter amount">
+            <label><i class="fa-solid fa-phone"></i> Account Number:</label>
+            <input type="number" id="accountNumber" placeholder="017XXXXXXXX">
 
-        <button class="submit-btn" onclick="sendWithdraw()">Confirm Withdraw</button>
+            <label><i class="fa-solid fa-dollar-sign"></i> Amount (Min $40):</label>
+            <input type="number" id="withdrawAmount" placeholder="Enter amount">
+
+            <button class="action-btn withdraw-btn" onclick="sendWithdraw()">Confirm Withdraw</button>
+        </div>
+    </div>
+
+    <div id="refer-page" class="page">
+        <h2>Refer & Earn</h2>
+        <i class="fa-solid fa-users" style="font-size: 60px; color: var(--primary); margin: 20px 0;"></i>
+        <p>বন্ধুদের ইনভাইট করুন এবং প্রতি রেফারে পান <b>$2.00</b></p>
+        
+        <div style="background: var(--card); padding: 20px; border-radius: 15px; margin-top: 20px;">
+            <small>Your Referral Code</small>
+            <h2 style="letter-spacing: 2px; color: var(--primary);">SIFAT_MR_786</h2>
+            <button class="action-btn" onclick="alert('Code Copied!')">Copy Code</button>
+        </div>
     </div>
 
     <nav class="nav-bar">
-        <div class="nav-link"><i class="fa-solid fa-house"></i><br>Home</div>
-        <div class="nav-link active"><i class="fa-solid fa-wallet"></i><br>Wallet</div>
-        <div class="nav-link"><i class="fa-solid fa-headset"></i><br>Support</div>
+        <div class="nav-link active-nav" onclick="showPage('home-page', this)"><i class="fa-solid fa-house fa-lg"></i><br>Home</div>
+        <div class="nav-link" onclick="showPage('wallet-page', this)"><i class="fa-solid fa-wallet fa-lg"></i><br>Wallet</div>
+        <div class="nav-link" onclick="showPage('refer-page', this)"><i class="fa-solid fa-share-nodes fa-lg"></i><br>Refer</div>
     </nav>
 
     <script>
-        const botToken = "8731805358:AAG_JnStDiGKdzAOk6novNkdKz67yTECcnw";
-        const chatId = "@Tech910erning";
+        // পেজ সুইচ করার ফাংশন
+        function showPage(pageId, element) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav'));
+            element.classList.add('active-nav');
+        }
 
+        // টেলিগ্রাম পেমেন্ট ফাংশন
         function sendWithdraw() {
+            const botToken = "8731805358:AAG_JnStDiGKdzAOk6novNkdKz67yTECcnw";
+            const chatId = "@Tech910erning";
             const method = document.getElementById('method').value;
             const number = document.getElementById('accountNumber').value;
             const amount = document.getElementById('withdrawAmount').value;
 
-            if(amount < 40) {
-                alert("সর্বনিম্ন ৪০ ডলার লাগবে!");
-                return;
-            }
+            if(amount < 40) { alert("সর্বনিম্ন ৪০ ডলার লাগবে!"); return; }
 
-            const message = `🚀 NEW WITHDRAW\n💰 Amount: $${amount}\n💳 Method: ${method}\n📱 Number: ${number}`;
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+            const msg = `🚀 NEW WITHDRAW\n💰 Amount: $${amount}\n💳 Method: ${method}\n📱 Number: ${number}`;
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`)
+            .then(res => { if(res.ok) alert("উইথড্র রিকোয়েস্ট পাঠানো হয়েছে!"); });
+        }
 
-            fetch(url).then(res => {
-                if(res.ok) alert("সফল হয়েছে! আপনার চ্যানেলে চেক করুন।");
-            });
+        // অ্যাডস দেখার ডামি ফাংশন
+        function showAd() {
+            alert("Ad is loading... (এখানে আপনার Monetag Ads এর কোড বসবে)");
         }
     </script>
 </body>
