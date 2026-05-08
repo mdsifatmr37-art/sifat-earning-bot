@@ -12,97 +12,73 @@
         :root { --primary: #ff00cc; --secondary: #3333ff; --bg: #0d0128; --card: #1a1a2e; }
         body { font-family: Arial, sans-serif; background: var(--bg); color: white; margin: 0; padding-bottom: 70px; }
         
-        /* Home Header */
-        .header { padding: 15px; display: flex; align-items: center; justify-content: space-between; }
-        .welcome-box { display: flex; align-items: center; gap: 10px; }
-        .profile-icon { font-size: 30px; color: var(--primary); }
-
-        /* Balance Card */
-        .balance-card { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 30px; border-radius: 20px; margin: 0 15px; text-align: center; }
-        .btn-group { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
-        .action-btn { padding: 8px 15px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; }
-
-        /* Task Grid */
-        .task-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 20px; }
-        .task-item { background: var(--card); padding: 15px 5px; border-radius: 15px; text-align: center; border: 1px solid #333; cursor: pointer; }
-        .task-item i { font-size: 24px; margin-bottom: 8px; display: block; }
-        .task-item span { font-size: 11px; }
-
-        /* Navigation */
-        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; }
-        .nav-link { color: #666; font-size: 11px; text-align: center; cursor: pointer; }
-        .active-nav { color: var(--primary); }
-
-        .page { display: none; }
+        .page { display: none; padding: 20px; }
         .active-page { display: block; }
         
-        /* Withdrawal Form */
-        .form-box { background: var(--card); margin: 15px; padding: 20px; border-radius: 15px; }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: #0d0128; color: white; box-sizing: border-box; }
+        /* Header & Balance */
+        .balance-card { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 30px; border-radius: 20px; text-align: center; margin-bottom: 20px; }
+        
+        /* Grid Layout */
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .grid-item { background: var(--card); padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #333; cursor: pointer; }
+        .grid-item i { font-size: 30px; margin-bottom: 10px; display: block; }
+        
+        /* Support List */
+        .support-item { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; cursor: pointer; border: 1px solid #222; }
+
+        /* Nav Bar */
+        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #333; }
+        .nav-link { color: #777; text-align: center; font-size: 12px; cursor: pointer; }
+        .active-nav { color: var(--primary); }
+
+        /* Timer Overlay */
+        #ad-timer-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
-    <div id="home-page" class="page active-page">
-        <div class="header">
-            <div class="welcome-box">
-                <i class="fa-solid fa-circle-user profile-icon"></i>
-                <div><small style="color:#bbb">Welcome,</small><br><strong>sifat008 ✅</strong></div>
-            </div>
-        </div>
-
+    <div id="home" class="page active-page">
         <div class="balance-card">
-            <small>Available Balance</small>
-            <h1 id="main-bal">$2.00</h1> <div class="btn-group">
-                <button class="action-btn" style="background:#ffaa00; color:white;">Bonus</button>
-                <button class="action-btn" style="background:#eee; color:#333;" onclick="showPage('wallet-page')">Withdraw</button>
-            </div>
+            <small>Total Balance</small>
+            <h1 id="main-bal">$2.00</h1>
         </div>
-
-        <div class="task-grid">
-            <div class="task-item" onclick="showAd('Facebook Work')"><i class="fa-brands fa-facebook" style="color:#1877F2"></i><span>Facebook Work</span></div>
-            <div class="task-item" onclick="showAd('Telegram')"><i class="fa-brands fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
-            <div class="task-item" onclick="showAd('Youtube')"><i class="fa-brands fa-youtube" style="color:red"></i><span>Youtube</span></div>
-            <div class="task-item" onclick="showAd('Tiktok')"><i class="fa-brands fa-tiktok"></i><span>Tiktok Work</span></div>
-            <div class="task-item" onclick="showAd('Daily Bonus')"><i class="fa-solid fa-star" style="color:gold"></i><span>Daily Bonus</span></div>
-            <div class="task-item" onclick="showPage('refer-page')"><i class="fa-solid fa-users" style="color:#00ff88"></i><span>Refer</span></div>
+        
+        <div class="grid-container">
+            <div class="grid-item" onclick="startMonetagAd()">
+                <i class="fa-solid fa-rectangle-ad" style="color: #00ff88;"></i>
+                <span>Watch Ads</span>
+            </div>
+            <div class="grid-item" onclick="showPage('support')">
+                <i class="fa-solid fa-headset" style="color: var(--primary);"></i>
+                <span>Support</span>
+            </div>
         </div>
     </div>
 
-    <div id="wallet-page" class="page">
-        <h2 style="text-align:center;">Withdraw Funds</h2>
-        <div class="balance-card">
-            <small>Wallet Balance</small>
-            <h1 class="bal-display">$2.00</h1>
+    <div id="support" class="page">
+        <h2>Support Center</h2>
+        <div class="support-item" onclick="window.location.href='https://t.me/Tech910erning'">
+            <i class="fa-brands fa-telegram" style="color: #0088cc; font-size: 24px;"></i>
+            <span>Support Channel</span>
         </div>
-        <div class="form-box">
-            <label>Payment Method:</label>
-            <select id="method">
-                <option value="BKash">BKash (বিকাশ)</option>
-                <option value="Nagad">Nagad (নগদ)</option>
-            </select>
-            <input type="number" id="acc-num" placeholder="বিকাশ বা নগদ নম্বর">
-            <input type="number" id="amount" placeholder="ডলারের পরিমাণ (মিনিমাম $৪০)">
-            <button onclick="submitWithdraw()" style="width:100%; padding:15px; border-radius:12px; border:none; background:var(--primary); color:white; font-weight:bold; cursor:pointer;">Confirm Withdraw</button>
+        <div class="support-item" onclick="window.location.href='https://t.me/bdearning2764'">
+            <i class="fa-brands fa-telegram" style="color: #0088cc; font-size: 24px;"></i>
+            <span>Join Channel</span>
+        </div>
+        <div class="support-item" onclick="window.location.href='https://www.youtube.com/@ItsMeSifatMr'">
+            <i class="fa-brands fa-youtube" style="color: red; font-size: 24px;"></i>
+            <span>Subscribe Youtube</span>
         </div>
     </div>
 
-    <div id="refer-page" class="page">
-        <div style="text-align:center; padding:40px 20px;">
-            <i class="fa-solid fa-gift" style="font-size:60px; color:var(--primary);"></i>
-            <h2>Invite & Earn</h2>
-            <p>প্রতি রেফারে পাবেন <b>$3</b> (বন্ধু একাউন্ট খুললে তবেই জমা হবে)</p>
-            <div style="border:2px dashed var(--primary); padding:20px; border-radius:15px; margin-top:20px;">
-                <small>Your Promo Code:</small>
-                <h2 style="color:#00ff88;">SIFAT_MR_786</h2>
-            </div>
-        </div>
+    <div id="ad-timer-overlay">
+        <h2 id="timer-text">অ্যাড শুরু হচ্ছে...</h2>
+        <p>দয়া করে ১৫ সেকেন্ড অপেক্ষা করুন</p>
     </div>
 
     <nav class="nav-bar">
-        <div class="nav-link active-nav" onclick="showPage('home-page')"><i class="fa-solid fa-house"></i><br>Home</div>
-        <div class="nav-link" onclick="showPage('wallet-page')"><i class="fa-solid fa-wallet"></i><br>Wallet</div>
-        <div class="nav-link" onclick="showPage('refer-page')"><i class="fa-solid fa-user-group"></i><br>Refer</div>
+        <div class="nav-link active-nav" onclick="showPage('home')"><i class="fa-solid fa-house"></i><br>Home</div>
+        <div class="nav-link" onclick="showPage('support')"><i class="fa-solid fa-circle-info"></i><br>Support</div>
     </nav>
 
     <script>
@@ -114,226 +90,39 @@
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav'));
         }
 
-        // Monetag অ্যাড ফাংশন
-        function showAd(taskName) {
-            alert(`@🇧🇩 Free Earning BD-তে আপনাকে স্বাগতম! 🇧🇩\n\n${taskName} অ্যাড লোড হচ্ছে...`);
+        function startMonetagAd() {
+            // ১৫ সেকেন্ডের টাইমার মেকানিজম
+            let timeLeft = 15;
+            const overlay = document.getElementById('ad-timer-overlay');
+            const timerText = document.getElementById('timer-text');
             
-            // Monetag অ্যাড কল
-            if (typeof show_10979048 === 'function') {
-                show_10979048().then(() => {
-                    // অ্যাড শেষ হওয়ার পর অটো ৫ সেন্ট যোগ হবে
-                    balance += 0.05;
-                    updateUI();
-                });
-            } else {
-                // টেস্ট পারপাস: অ্যাড লোড না হলেও ব্যালেন্স যোগ হবে
-                balance += 0.05;
-                updateUI();
-            }
-        }
-
-        function updateUI() {
-            document.getElementById('main-bal').innerText = `$${balance.toFixed(2)}`;
-            document.querySelectorAll('.bal-display').forEach(d => d.innerText = `$${balance.toFixed(2)}`);
-        }
-
-        function submitWithdraw() {
-            const amt = parseFloat(document.getElementById('amount').value);
-            const method = document.getElementById('method').value;
-            const num = document.getElementById('acc-num').value;
-
-            if (amt < 40) {
-                alert("লিমিট থাকবে 40 ডলারের নিচে কেউ উইথড্র দিতে পারবে না");
-                return;
-            }
-
-            if (amt > balance) {
-                alert("আপনার পর্যাপ্ত ব্যালেন্স নেই!");
-                return;
-            }
-
-            // টেলিগ্রাম বটের মাধ্যমে আপনার চ্যানেলে মেসেজ পাঠানো
-            const botToken = "8731805358:AAG_JnStDiGKdzAOk6novNkdKz67yTECcnw";
-            const chatId = "@Tech910erning";
-            const msg = `🚀 NEW WITHDRAW REQUEST\n💰 Amount: $${amt}\n💳 Method: ${method}\n📱 Number: ${num}\n✅ Status: Pending`;
-
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`)
-            .then(() => {
-                // আপনার চাওয়া কনফার্মেশন মেসেজ
-                alert("আপনার উইথড্রো টি কনফার্ম হয়েছে পেন্টিং এ আছে 24 ঘন্টা অথবা 48 ঘন্টার মধ্যে আপনি আপনার পেমেন্ট পেয়ে যাবেন");
-                balance -= amt;
-                updateUI();
-            });
-        }
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sifat MR Earning App</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <script src='//whephiac.com/sdk.js' data-zone='10979048' data-sdk='show_10979048'></script>
-
-    <style>
-        :root { --primary: #ff00cc; --secondary: #3333ff; --bg: #0d0128; --card: #1a1a2e; }
-        body { font-family: Arial, sans-serif; background: var(--bg); color: white; margin: 0; padding-bottom: 70px; }
-        
-        /* Home Header */
-        .header { padding: 15px; display: flex; align-items: center; justify-content: space-between; }
-        .welcome-box { display: flex; align-items: center; gap: 10px; }
-        .profile-icon { font-size: 30px; color: var(--primary); }
-
-        /* Balance Card */
-        .balance-card { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 30px; border-radius: 20px; margin: 0 15px; text-align: center; }
-        .btn-group { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
-        .action-btn { padding: 8px 15px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; }
-
-        /* Task Grid */
-        .task-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 20px; }
-        .task-item { background: var(--card); padding: 15px 5px; border-radius: 15px; text-align: center; border: 1px solid #333; cursor: pointer; }
-        .task-item i { font-size: 24px; margin-bottom: 8px; display: block; }
-        .task-item span { font-size: 11px; }
-
-        /* Navigation */
-        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; }
-        .nav-link { color: #666; font-size: 11px; text-align: center; cursor: pointer; }
-        .active-nav { color: var(--primary); }
-
-        .page { display: none; }
-        .active-page { display: block; }
-        
-        /* Withdrawal Form */
-        .form-box { background: var(--card); margin: 15px; padding: 20px; border-radius: 15px; }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: #0d0128; color: white; box-sizing: border-box; }
-    </style>
-</head>
-<body>
-
-    <div id="home-page" class="page active-page">
-        <div class="header">
-            <div class="welcome-box">
-                <i class="fa-solid fa-circle-user profile-icon"></i>
-                <div><small style="color:#bbb">Welcome,</small><br><strong>sifat008 ✅</strong></div>
-            </div>
-        </div>
-
-        <div class="balance-card">
-            <small>Available Balance</small>
-            <h1 id="main-bal">$2.00</h1> <div class="btn-group">
-                <button class="action-btn" style="background:#ffaa00; color:white;">Bonus</button>
-                <button class="action-btn" style="background:#eee; color:#333;" onclick="showPage('wallet-page')">Withdraw</button>
-            </div>
-        </div>
-
-        <div class="task-grid">
-            <div class="task-item" onclick="showAd('Facebook Work')"><i class="fa-brands fa-facebook" style="color:#1877F2"></i><span>Facebook Work</span></div>
-            <div class="task-item" onclick="showAd('Telegram')"><i class="fa-brands fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
-            <div class="task-item" onclick="showAd('Youtube')"><i class="fa-brands fa-youtube" style="color:red"></i><span>Youtube</span></div>
-            <div class="task-item" onclick="showAd('Tiktok')"><i class="fa-brands fa-tiktok"></i><span>Tiktok Work</span></div>
-            <div class="task-item" onclick="showAd('Daily Bonus')"><i class="fa-solid fa-star" style="color:gold"></i><span>Daily Bonus</span></div>
-            <div class="task-item" onclick="showPage('refer-page')"><i class="fa-solid fa-users" style="color:#00ff88"></i><span>Refer</span></div>
-        </div>
-    </div>
-
-    <div id="wallet-page" class="page">
-        <h2 style="text-align:center;">Withdraw Funds</h2>
-        <div class="balance-card">
-            <small>Wallet Balance</small>
-            <h1 class="bal-display">$2.00</h1>
-        </div>
-        <div class="form-box">
-            <label>Payment Method:</label>
-            <select id="method">
-                <option value="BKash">BKash (বিকাশ)</option>
-                <option value="Nagad">Nagad (নগদ)</option>
-            </select>
-            <input type="number" id="acc-num" placeholder="বিকাশ বা নগদ নম্বর">
-            <input type="number" id="amount" placeholder="ডলারের পরিমাণ (মিনিমাম $৪০)">
-            <button onclick="submitWithdraw()" style="width:100%; padding:15px; border-radius:12px; border:none; background:var(--primary); color:white; font-weight:bold; cursor:pointer;">Confirm Withdraw</button>
-        </div>
-    </div>
-
-    <div id="refer-page" class="page">
-        <div style="text-align:center; padding:40px 20px;">
-            <i class="fa-solid fa-gift" style="font-size:60px; color:var(--primary);"></i>
-            <h2>Invite & Earn</h2>
-            <p>প্রতি রেফারে পাবেন <b>$3</b> (বন্ধু একাউন্ট খুললে তবেই জমা হবে)</p>
-            <div style="border:2px dashed var(--primary); padding:20px; border-radius:15px; margin-top:20px;">
-                <small>Your Promo Code:</small>
-                <h2 style="color:#00ff88;">SIFAT_MR_786</h2>
-            </div>
-        </div>
-    </div>
-
-    <nav class="nav-bar">
-        <div class="nav-link active-nav" onclick="showPage('home-page')"><i class="fa-solid fa-house"></i><br>Home</div>
-        <div class="nav-link" onclick="showPage('wallet-page')"><i class="fa-solid fa-wallet"></i><br>Wallet</div>
-        <div class="nav-link" onclick="showPage('refer-page')"><i class="fa-solid fa-user-group"></i><br>Refer</div>
-    </nav>
-
-    <script>
-        let balance = 2.00;
-
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(pageId).classList.add('active-page');
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav'));
-        }
-
-        // Monetag অ্যাড ফাংশন
-        function showAd(taskName) {
-            alert(`@🇧🇩 Free Earning BD-তে আপনাকে স্বাগতম! 🇧🇩\n\n${taskName} অ্যাড লোড হচ্ছে...`);
+            overlay.style.display = 'flex';
             
-            // Monetag অ্যাড কল
-            if (typeof show_10979048 === 'function') {
-                show_10979048().then(() => {
-                    // অ্যাড শেষ হওয়ার পর অটো ৫ সেন্ট যোগ হবে
-                    balance += 0.05;
-                    updateUI();
-                });
-            } else {
-                // টেস্ট পারপাস: অ্যাড লোড না হলেও ব্যালেন্স যোগ হবে
-                balance += 0.05;
-                updateUI();
-            }
+            let timerInterval = setInterval(() => {
+                timerText.innerText = `অ্যাড শেষ হতে বাকি: ${timeLeft} সেকেন্ড`;
+                timeLeft--;
+
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                    overlay.style.display = 'none';
+                    
+                    // টাইমার শেষ হওয়ার পর Monetag অ্যাড কল করা
+                    if (typeof show_10979048 === 'function') {
+                        show_10979048().then(() => {
+                            addBalance();
+                        });
+                    } else {
+                        // যদি স্ক্রিপ্ট লোড না হয় তবে সরাসরি যোগ হবে (টেস্টের জন্য)
+                        addBalance();
+                    }
+                }
+            }, 1000);
         }
 
-        function updateUI() {
+        function addBalance() {
+            balance += 0.05;
             document.getElementById('main-bal').innerText = `$${balance.toFixed(2)}`;
-            document.querySelectorAll('.bal-display').forEach(d => d.innerText = `$${balance.toFixed(2)}`);
-        }
-
-        function submitWithdraw() {
-            const amt = parseFloat(document.getElementById('amount').value);
-            const method = document.getElementById('method').value;
-            const num = document.getElementById('acc-num').value;
-
-            if (amt < 40) {
-                alert("লিমিট থাকবে 40 ডলারের নিচে কেউ উইথড্র দিতে পারবে না");
-                return;
-            }
-
-            if (amt > balance) {
-                alert("আপনার পর্যাপ্ত ব্যালেন্স নেই!");
-                return;
-            }
-
-            // টেলিগ্রাম বটের মাধ্যমে আপনার চ্যানেলে মেসেজ পাঠানো
-            const botToken = "8731805358:AAG_JnStDiGKdzAOk6novNkdKz67yTECcnw";
-            const chatId = "@Tech910erning";
-            const msg = `🚀 NEW WITHDRAW REQUEST\n💰 Amount: $${amt}\n💳 Method: ${method}\n📱 Number: ${num}\n✅ Status: Pending`;
-
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`)
-            .then(() => {
-                // আপনার চাওয়া কনফার্মেশন মেসেজ
-                alert("আপনার উইথড্রো টি কনফার্ম হয়েছে পেন্টিং এ আছে 24 ঘন্টা অথবা 48 ঘন্টার মধ্যে আপনি আপনার পেমেন্ট পেয়ে যাবেন");
-                balance -= amt;
-                updateUI();
-            });
+            alert("অভিনন্দন! ৫ সেন্ট আপনার ব্যালেন্সে যোগ হয়েছে।");
         }
     </script>
 </body>
