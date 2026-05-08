@@ -1,111 +1,122 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sifat MR Earning App</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #ff00cc; --secondary: #3333ff; --bg: #0d0128; --card: #1a1a2e; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: white; margin: 0; padding-bottom: 80px; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: white; margin: 0; padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
         
-        .page { display: none; animation: fadeIn 0.3s; }
+        .page { display: none; animation: fadeIn 0.3s; padding: 10px; }
         .active-page { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Header Section */
+        /* User Header */
         .user-header { padding: 20px; display: flex; align-items: center; gap: 15px; }
-        .avatar { width: 50px; height: 50px; border-radius: 50%; background: #444; border: 2px solid var(--primary); }
+        .avatar { width: 55px; height: 55px; border-radius: 50%; background: #252545; border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; }
 
         /* Balance Card */
         .balance-card {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            margin: 0 20px; padding: 25px; border-radius: 20px; text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            margin: 10px; padding: 25px; border-radius: 25px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .balance-amount { font-size: 35px; font-weight: bold; }
-        .action-btns { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
-        .mini-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 10px; font-size: 13px; cursor: pointer; }
+        .balance-amount { font-size: 38px; font-weight: bold; margin: 5px 0; }
 
-        /* Grid Layout for Work */
-        .work-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 12px; padding: 20px;
-        }
-        .grid-item {
-            background: var(--card); padding: 15px 5px; border-radius: 15px;
-            text-align: center; border: 1px solid #ffffff1a; cursor: pointer;
-        }
-        .grid-item i { font-size: 24px; margin-bottom: 8px; display: block; }
-        .grid-item span { font-size: 11px; font-weight: 400; color: #ccc; }
+        /* Work Grid */
+        .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 15px; }
+        .grid-item { background: var(--card); padding: 18px 10px; border-radius: 20px; text-align: center; border: 1px solid #ffffff0d; cursor: pointer; }
+        .grid-item i { font-size: 28px; margin-bottom: 8px; display: block; }
+        .grid-item span { font-size: 11px; color: #ccc; display: block; }
 
-        /* Navigation Bar */
-        .nav-bar {
-            position: fixed; bottom: 0; width: 100%; background: #161625;
-            display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333;
-        }
-        .nav-link { color: #888; text-decoration: none; font-size: 11px; text-align: center; cursor: pointer; border: none; background: none; }
+        /* List Items (Support & History) */
+        .list-item { background: var(--card); margin: 10px 0; padding: 15px; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #ffffff0d; }
+        
+        /* Inputs for Withdraw */
+        .input-group { background: var(--card); padding: 20px; border-radius: 20px; margin-top: 15px; }
+        input, select { width: 92%; padding: 12px; margin-top: 10px; border-radius: 10px; border: none; background: #0d0128; color: white; outline: none; }
+        .submit-btn { width: 100%; padding: 15px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: bold; margin-top: 20px; cursor: pointer; }
+
+        /* Navigation */
+        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #111122; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 100; }
+        .nav-link { color: #666; text-decoration: none; font-size: 11px; text-align: center; background: none; border: none; }
         .nav-link.active { color: var(--primary); }
-        .nav-link i { font-size: 20px; margin-bottom: 3px; }
-
-        .support-item {
-            background: var(--card); margin: 10px 20px; padding: 15px;
-            border-radius: 12px; display: flex; align-items: center; justify-content: space-between;
-        }
     </style>
 </head>
 <body>
 
     <div id="home" class="page active-page">
         <div class="user-header">
-            <div class="avatar"></div>
+            <div class="avatar"><i class="fas fa-user" style="color: var(--primary);"></i></div>
             <div>Welcome, <b>sifat008</b> ✅</div>
         </div>
-        
         <div class="balance-card">
-            <small>Available Balance</small>
+            <small style="opacity:0.8;">Available Balance</small>
             <div class="balance-amount">$<span id="mainBalance">54.50</span></div>
-            <div class="action-btns">
-                <button class="mini-btn"><i class="fas fa-gift"></i> Bonus</button>
-                <button class="mini-btn" onclick="showPage('wallet')"><i class="fas fa-wallet"></i> Withdraw</button>
-            </div>
+            <button onclick="showPage('wallet')" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:8px 20px; border-radius:10px; cursor:pointer;">Withdraw Now</button>
         </div>
-
         <div class="work-grid">
-            <div class="grid-item" onclick="handleWork('Facebook')">
-                <i class="fab fa-facebook" style="color: #1877f2;"></i>
-                <span>Facebook</span>
+            <div class="grid-item" onclick="showRewardAd()">
+                <i class="fas fa-play-circle" style="color: #ffcc00;"></i>
+                <span>Watch Ads</span>
+                <small style="color:#4caf50;">$0.05</small>
             </div>
-            <div class="grid-item" onclick="handleWork('Telegram')">
-                <i class="fab fa-telegram" style="color: #0088cc;"></i>
-                <span>Telegram</span>
-            </div>
-            <div class="grid-item" onclick="handleWork('Youtube')">
-                <i class="fab fa-youtube" style="color: #ff0000;"></i>
-                <span>Youtube</span>
-            </div>
-            <div class="grid-item" onclick="handleWork('TikTok')">
-                <i class="fab fa-tiktok"></i>
-                <span>TikTok</span>
-            </div>
-            <div class="grid-item" onclick="handleWork('Bonus')">
-                <i class="fas fa-calendar-check" style="color: #f1c40f;"></i>
-                <span>Daily Bonus</span>
-            </div>
-            <div class="grid-item" onclick="handleWork('Refer')">
+            <div class="grid-item" onclick="showPage('refer')">
                 <i class="fas fa-users" style="color: #a29bfe;"></i>
                 <span>Refer</span>
+            </div>
+            <div class="grid-item" onclick="showPage('support')">
+                <i class="fas fa-headset" style="color: #2ecc71;"></i>
+                <span>Support</span>
             </div>
         </div>
     </div>
 
+    <div id="wallet" class="page">
+        <h3 style="text-align:center;">Withdraw Section</h3>
+        <div class="input-group">
+            <label>Select Method:</label>
+            <select id="method">
+                <option value="BKash">BKash (বিকাশ)</option>
+                <option value="Nagad">Nagad (নগদ)</option>
+            </select>
+            <label style="display:block; margin-top:15px;">Number:</label>
+            <input type="number" id="accountNumber" placeholder="017XXXXXXXX">
+            <label style="display:block; margin-top:15px;">Amount (Min $40):</label>
+            <input type="number" id="withdrawAmount" placeholder="Enter Dollar">
+            <button class="submit-btn" onclick="processWithdraw()">Submit Withdraw</button>
+        </div>
+        <h4 style="margin-top:20px;">Payment History</h4>
+        <div id="paymentHistory">
+            <div class="list-item" id="noHistory"><span>No history yet</span></div>
+        </div>
+    </div>
+
+    <div id="refer" class="page">
+        <h3 style="text-align:center;">Invite Friends</h3>
+        <div style="background:var(--card); padding:30px; border-radius:20px; border:1px dashed var(--primary); text-align:center;">
+            <i class="fas fa-gift" style="font-size:50px; color:var(--primary);"></i>
+            <h2>Earn $3 Per Refer</h2>
+            <div style="background:#0d0128; padding:15px; border-radius:10px; margin:20px 0;">
+                <b id="promoCode" style="font-size:22px; color:var(--primary);">SIFAT_MR_786</b>
+            </div>
+            <button onclick="copyCode()" class="submit-btn">Copy Promo Code</button>
+        </div>
+    </div>
+
     <div id="support" class="page">
-        <h3 style="text-align:center; margin-top:30px;">Support Center</h3>
-        <div class="support-item"><span><i class="fab fa-telegram"></i> Support Channel</span> <i class="fas fa-chevron-right"></i></div>
-        <div class="support-item"><span><i class="fab fa-youtube"></i> Subscribe Youtube</span> <i class="fas fa-chevron-right"></i></div>
+        <h3 style="text-align:center;">Contact Admin</h3>
+        <div class="list-item" onclick="window.open('https://t.me/Tech910erning')">
+            <div><i class="fab fa-telegram" style="color:#0088cc;"></i> Support Channel</div>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="list-item" onclick="window.open('https://www.youtube.com/@ItsMeSifatMr')">
+            <div><i class="fab fa-youtube" style="color:#ff0000;"></i> YouTube Subscribe</div>
+            <i class="fas fa-chevron-right"></i>
+        </div>
     </div>
 
     <nav class="nav-bar">
@@ -116,26 +127,69 @@
     </nav>
 
     <script>
-        let balance = 54.50;
+        let balance = parseFloat(localStorage.getItem('userBalance')) || 54.50;
+        document.getElementById('mainBalance').innerText = balance.toFixed(2);
 
-        function showPage(pageId, element) {
+        function showPage(id, el) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            const targetPage = document.getElementById(pageId);
-            if(targetPage) targetPage.classList.add('active-page');
-
-            if(element) {
+            document.getElementById(id).classList.add('active-page');
+            if(el) {
                 document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-                element.classList.add('active');
+                el.classList.add('active');
             }
         }
 
-        function handleWork(type) {
-            alert(type + " Work Loading...");
-            // এখানে আপনার Monetag লিঙ্ক বসাতে পারেন
+        function showRewardAd() {
+            // Monetag Ad ID: 10979048
             window.open("https://prmnode.com/pfe/current/tag.min.js?z=10979048", "_blank");
+            setTimeout(() => {
+                balance += 0.05;
+                updateBalance();
+                alert("অ্যাড সফলভাবে দেখেছেন! $0.05 আপনার ব্যালেন্সে যোগ হয়েছে।");
+            }, 4000);
+        }
+
+        function processWithdraw() {
+            const num = document.getElementById('accountNumber').value;
+            const amt = parseFloat(document.getElementById('withdrawAmount').value);
+            const method = document.getElementById('method').value;
+
+            if (amt < 40) {
+                alert("দুঃখিত! ৪০ ডলারের নিচে উইথড্র দেওয়া সম্ভব নয়।");
+                return;
+            }
+            if (amt > balance) {
+                alert("আপনার পর্যাপ্ত ব্যালেন্স নেই।");
+                return;
+            }
+            if (num.length < 10) {
+                alert("সঠিক নাম্বার দিন।");
+                return;
+            }
+
+            alert("আপনার উইথড্রো টি কনফার্ম হয়েছে এবং পেন্ডিং এ আছে। ২৪ ঘন্টা অথবা ৪৮ ঘন্টার মধ্যে আপনি আপনার পেমেন্ট পেয়ে যাবেন।");
             
-            balance += 0.05;
+            balance -= amt;
+            updateBalance();
+            
+            // Add to history
+            const hist = document.getElementById('paymentHistory');
+            document.getElementById('noHistory').style.display = 'none';
+            const item = `<div class="list-item" style="border-left:4px solid #ffcc00;">
+                <div><b>$${amt} (${method})</b><br><small>To: ${num}</small></div>
+                <b style="color:#ffcc00;">Pending</b>
+            </div>`;
+            hist.innerHTML = item + hist.innerHTML;
+        }
+
+        function updateBalance() {
             document.getElementById('mainBalance').innerText = balance.toFixed(2);
+            localStorage.setItem('userBalance', balance);
+        }
+
+        function copyCode() {
+            navigator.clipboard.writeText("SIFAT_MR_786");
+            alert("Code Copied!");
         }
     </script>
 </body>
