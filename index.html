@@ -1,168 +1,129 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="monetag" content="eb922bf06617e26d839713d2cdd86ad7">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sifat Earning Pro</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Sifat MR Earning App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="//libtl.com/sdk.js" data-zone="10971120" data-sdk="show_10971120"></script>
-    
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #0b0b0b; color: white; margin: 0; text-align: center; }
-        .page { display: none; padding-bottom: 80px; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-        .active-page { display: block; }
+        :root { --primary-gradient: linear-gradient(135deg, #ff00cc, #3333ff); --card-bg: #ffffff1a; }
+        body { font-family: 'Poppins', sans-serif; background-color: #0d0128; color: white; margin: 0; overflow-x: hidden; }
         
-        /* Header */
-        .header { padding: 30px 20px; background: #1a1a1a; border-bottom: 2px solid #f39c12; margin-bottom: 15px; }
-        #balance { font-size: 3.5em; color: #f39c12; font-weight: bold; }
+        /* Profile Header */
+        .header { padding: 20px; display: flex; align-items: center; gap: 15px; }
+        .profile-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ff00cc; padding: 2px; }
+        .user-info h2 { margin: 0; font-size: 18px; }
+        .verified { color: #00f2fe; font-size: 14px; }
 
-        /* Container & Cards */
-        .container { padding: 15px; }
-        .card { background: #161616; margin: 12px 0; padding: 20px; border-radius: 15px; border: 1px solid #333; text-align: left; }
-        .btn { background: #f39c12; color: black; border: none; padding: 12px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 16px; transition: 0.3s; }
-        .btn:active { transform: scale(0.95); }
-        
-        /* Profile Specific */
-        .profile-icon { font-size: 60px; color: #f39c12; margin-bottom: 10px; }
-        .stat-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #222; }
+        /* Balance Card */
+        .balance-card {
+            background: var(--primary-gradient);
+            margin: 0 20px; padding: 25px; border-radius: 25px;
+            text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .balance-amount { font-size: 40px; font-weight: bold; margin: 10px 0; }
+        .btn-group { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+        .main-btn { background: #ffffff33; border: none; padding: 10px 20px; border-radius: 30px; color: white; font-weight: bold; cursor: pointer; backdrop-filter: blur(5px); }
+
+        /* Grid System */
+        .work-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 15px; padding: 20px;
+        }
+        .work-item {
+            background: var(--card-bg); padding: 20px 10px;
+            border-radius: 15px; text-align: center;
+            border: 1px solid #ffffff1a; transition: 0.3s;
+        }
+        .work-item i { font-size: 24px; margin-bottom: 10px; display: block; }
+        .work-item span { font-size: 12px; font-weight: 500; }
+        .facebook { color: #1877f2; } .youtube { color: #ff0000; } .telegram { color: #0088cc; } .tiktok { color: #010101; background: white; border-radius: 5px; padding: 2px; }
 
         /* Bottom Nav */
-        .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; box-shadow: 0 -5px 15px rgba(0,0,0,0.5); }
-        .nav-item { color: #888; text-decoration: none; font-size: 12px; cursor: pointer; transition: 0.3s; }
-        .nav-item.active { color: #f39c12; }
-        .nav-item i { font-size: 20px; margin-bottom: 4px; }
-
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; background: #222; color: white; border: 1px solid #444; box-sizing: border-box; }
+        .nav-bar {
+            position: fixed; bottom: 0; width: 100%;
+            background: #1a1a2e; display: flex;
+            justify-content: space-around; padding: 15px 0;
+            border-top: 1px solid #333;
+        }
+        .nav-link { color: #888; text-decoration: none; font-size: 12px; text-align: center; }
+        .nav-link.active { color: #ff00cc; }
+        .center-btn {
+            background: #ff00cc; width: 55px; height: 55px;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; margin-top: -35px; border: 5px solid #0d0128;
+        }
     </style>
 </head>
 <body>
 
-    <div id="home" class="page active-page">
-        <div class="header">
-            <div style="color: #888;">CURRENT BALANCE</div>
-            <div id="balance">0</div>
-            <div style="color: #f39c12;">Coins</div>
-        </div>
-        <div class="container">
-            <div class="card">
-                <h3 style="margin:0;">Hello, Sifat MR! 👋</h3>
-                <p style="color:#888; font-size: 14px;">কাজ শুরু করতে টাস্ক অপশনে যান এবং বিজ্ঞাপন দেখুন।</p>
-            </div>
-            <div class="card" style="border-left: 4px solid #f39c12;">
-                <b>Daily Reward</b><br><small>Claim your free 50 coins every day.</small>
-                <button class="btn" onclick="addPoints(50, 'Daily Reward')">Claim Now</button>
-            </div>
+    <div class="header">
+        <img src="https://i.ibb.co/vz6K2Yv/avatar.png" class="profile-img">
+        <div class="user-info">
+            <h2>Welcome, sifat008 <i class="fas fa-check-circle verified"></i></h2>
         </div>
     </div>
 
-    <div id="task" class="page">
-        <div class="header"><h3>Work Station</h3></div>
-        <div class="container">
-            <div class="card" style="border-left: 4px solid #0088cc;">
-                <i class="fas fa-play-circle"></i> <b>Video Ads</b><br>
-                <small>Watch ads and earn 100 coins per view.</small>
-                <button class="btn" style="background:#0088cc; color:white;" onclick="watchAd()">Watch Ad</button>
-            </div>
-            <div class="card" style="border-left: 4px solid #9b59b6;">
-                <i class="fas fa-bolt"></i> <b>Fast Task</b><br>
-                <small>High speed ad loading for quick earn.</small>
-                <button class="btn" style="background:#9b59b6; color:white;" onclick="watchAd()">Start Fast Task</button>
-            </div>
+    <div class="balance-card">
+        <div style="font-size: 14px; opacity: 0.8;">Available Balance</div>
+        <div class="balance-amount">$<span id="userBalance">54.50</span> <small style="font-size: 16px;">USD</small></div>
+        <div class="btn-group">
+            <button class="main-btn">🎁 Bonus</button>
+            <button class="main-btn">💳 Withdraw</button>
         </div>
     </div>
 
-    <div id="withdraw" class="page">
-        <div class="header"><h3>Cash Out</h3></div>
-        <div class="container">
-            <div class="card">
-                <label>Method:</label>
-                <select id="method">
-                    <option value="Bkash">Bkash (বিকাশ)</option>
-                    <option value="Nagad">Nagad (নগদ)</option>
-                    <option value="Rocket">Rocket (রকেট)</option>
-                </select>
-                <input type="number" id="phone" placeholder="Wallet Number">
-                <input type="number" id="amount" placeholder="Minimum 5000 Coins">
-                <button class="btn" style="background:#2ecc71; color:white;" onclick="submitWithdraw()">Withdraw Request</button>
-            </div>
+    <div style="padding: 10px 20px; display: flex; justify-content: space-between; font-size: 13px; font-weight: bold;">
+        <span><i class="fas fa-briefcase"></i> Commission</span>
+        <span style="color: #ff00cc;"><i class="fas fa-sync"></i> Spin & Win</span>
+    </div>
+
+    <div class="work-grid">
+        <div class="work-item" onclick="alert('Facebook Work Loading...')">
+            <i class="fab fa-facebook facebook"></i>
+            <span>Facebook Work</span>
+        </div>
+        <div class="work-item">
+            <i class="fas fa-globe telegram"></i>
+            <span>Otoeb</span>
+        </div>
+        <div class="work-item">
+            <i class="fab fa-telegram telegram"></i>
+            <span>Telegram</span>
+        </div>
+        <div class="work-item">
+            <i class="fab fa-tiktok tiktok"></i>
+            <span>Tiktok Work</span>
+        </div>
+        <div class="work-item">
+            <i class="fab fa-youtube youtube"></i>
+            <span>Youtube</span>
+        </div>
+        <div class="work-item">
+            <i class="fas fa-calendar-check" style="color: #f39c12;"></i>
+            <span>Daily Bonus</span>
+        </div>
+        <div class="work-item">
+            <i class="fas fa-poll" style="color: #2ecc71;"></i>
+            <span>Surveys</span>
+        </div>
+        <div class="work-item">
+            <i class="fas fa-robot" style="color: #9b59b6;"></i>
+            <span>AI Bot</span>
+        </div>
+        <div class="work-item">
+            <i class="fas fa-users" style="color: #34495e;"></i>
+            <span>Refer</span>
         </div>
     </div>
 
-    <div id="profile" class="page">
-        <div class="header">
-            <div class="profile-icon"><i class="fas fa-user-circle"></i></div>
-            <h3 style="margin:0;">User Profile</h3>
-        </div>
-        <div class="container">
-            <div class="card">
-                <div class="stat-row"><span>Name:</span> <strong>MD Sifat MR</strong></div>
-                <div class="stat-row"><span>User ID:</span> <strong>#SF9901</strong></div>
-                <div class="stat-row"><span>Status:</span> <strong style="color:#2ecc71;">Active</strong></div>
-                <div class="stat-row"><span>Refers:</span> <strong>0</strong></div>
-            </div>
-            <div class="card" style="text-align: center;">
-                <p style="color:#888;">Invite friends to earn bonus!</p>
-                <button class="btn" style="background:#444; color:white;" onclick="alert('Link Copied!')">Copy Invite Link</button>
-            </div>
-        </div>
-    </div>
-
-    <nav class="nav">
-        <div class="nav-item active" onclick="showPage('home', this)"><i class="fas fa-home"></i><br>Home</div>
-        <div class="nav-item" onclick="showPage('task', this)"><i class="fas fa-tasks"></i><br>Task</div>
-        <div class="nav-item" onclick="showPage('withdraw', this)"><i class="fas fa-wallet"></i><br>Wallet</div>
-        <div class="nav-item" onclick="showPage('profile', this)"><i class="fas fa-user"></i><br>Profile</div>
+    <nav class="nav-bar">
+        <a href="#" class="nav-link active"><i class="fas fa-home"></i><br>Home</a>
+        <a href="#" class="nav-link"><i class="fas fa-store"></i><br>Shop</a>
+        <div class="center-btn"><i class="fas fa-wallet" style="color: white; font-size: 20px;"></i></div>
+        <a href="#" class="nav-link"><i class="fas fa-headset"></i><br>Support</a>
+        <a href="#" class="nav-link"><i class="fas fa-user"></i><br>Profile</a>
     </nav>
 
-    <script>
-        let bal = parseInt(localStorage.getItem('sifat_bal')) || 0;
-        document.getElementById('balance').innerText = bal;
-
-        function showPage(pageId, element) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(pageId).classList.add('active-page');
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            element.classList.add('active');
-        }
-
-        function saveData() {
-            localStorage.setItem('sifat_bal', bal);
-            document.getElementById('balance').innerText = bal;
-        }
-
-        function addPoints(n, msg) {
-            if (msg === "Daily Reward") {
-                let last = localStorage.getItem('lastClaim');
-                if (last === new Date().toDateString()) {
-                    alert("আজকের বোনাস নেওয়া শেষ!"); return;
-                }
-                localStorage.setItem('lastClaim', new Date().toDateString());
-            }
-            bal += n;
-            saveData();
-            alert(msg + " Successful! +" + n + " Coins");
-        }
-
-        function watchAd() {
-            alert("বিজ্ঞাপন লোড হচ্ছে... অনুগ্রহ করে ৫ সেকেন্ড অপেক্ষা করুন।");
-            window.open('https://omg10.com/4/10971246', '_blank'); 
-            setTimeout(() => { addPoints(100, "Ad Reward"); }, 5000); 
-        }
-
-        function submitWithdraw() {
-            const phone = document.getElementById('phone').value;
-            const amt = document.getElementById('amount').value;
-            if (bal < 5000 || amt < 5000) { alert("কমপক্ষে ৫০০০ পয়েন্ট প্রয়োজন।"); return; }
-            if (phone.length < 11) { alert("সঠিক নম্বর দিন।"); return; }
-            alert("পেমেন্ট রিকোয়েস্ট সফল! ২৪ ঘণ্টার মধ্যে টাকা পাবেন।");
-            bal -= parseInt(amt);
-            saveData();
-        }
-
-        window.Telegram.WebApp.expand();
-    </script>
 </body>
 </html>
