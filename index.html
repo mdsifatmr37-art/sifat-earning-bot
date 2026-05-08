@@ -22,22 +22,21 @@
         }
         .balance-amount { font-size: 45px; font-weight: bold; margin: 5px 0; }
 
-        /* Grid & Lists */
+        /* Task & Grid */
         .container { padding: 20px; }
         .task-item {
             background: var(--card); padding: 15px; border-radius: 15px;
             display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 12px; border: 1px solid #ffffff1a; transition: 0.2s;
+            margin-bottom: 12px; border: 1px solid #ffffff1a; transition: 0.2s; cursor: pointer;
         }
-        .task-item:active { transform: scale(0.98); }
         .icon-box { width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
 
-        /* Forms & Modals */
+        /* Modals */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 1000; padding: 20px; box-sizing: border-box;
+            background: rgba(0,0,0,0.95); z-index: 1000; padding: 20px; box-sizing: border-box;
         }
-        .form-card { background: var(--card); padding: 25px; border-radius: 20px; margin-top: 50px; }
+        .form-card { background: var(--card); padding: 25px; border-radius: 20px; margin-top: 50px; border: 1px solid var(--primary); }
         input, select {
             width: 100%; padding: 12px; margin: 10px 0; background: #00000033;
             border: 1px solid #444; color: white; border-radius: 10px; box-sizing: border-box;
@@ -56,9 +55,6 @@
         .nav-link { color: #888; text-decoration: none; font-size: 11px; text-align: center; cursor: pointer; }
         .nav-link.active { color: var(--primary); }
         .nav-link i { font-size: 20px; margin-bottom: 5px; }
-
-        /* Utility */
-        .refer-box { background: #ffffff0d; padding: 15px; border-radius: 10px; border: 1px dashed var(--primary); margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -66,10 +62,10 @@
     <div id="home" class="page active-page">
         <div class="header">
             <h2 style="margin:0;">Sifat MR Earning</h2>
-            <p style="opacity:0.6; font-size:12px;">Earn real dollars daily</p>
+            <p style="opacity:0.6; font-size:12px;">Welcome Back!</p>
         </div>
         <div class="balance-card">
-            <small style="opacity:0.8;">Current Balance (Sign up Bonus $2)</small>
+            <small style="opacity:0.8;">Sign-up Bonus: $2.00</small>
             <div class="balance-amount">$<span id="mainBalance">2.00</span></div>
             <div style="display:flex; gap:10px;">
                 <button class="btn" style="background:#ffffff22;" onclick="showPage('task')">Start Work</button>
@@ -80,15 +76,15 @@
             <div class="task-item" onclick="showPage('refer')">
                 <div style="display:flex; align-items:center; gap:15px;">
                     <div class="icon-box" style="background: #9b59b6;"><i class="fas fa-users"></i></div>
-                    <div><b>Refer & Earn</b><br><small>Get $3 per referral</small></div>
+                    <div><b>Refer Friend</b><br><small>Earn $3.00 per user</small></div>
                 </div>
-                <b style="color: #2ecc71;">$3.00</b>
+                <b style="color: #2ecc71;">+$3.00</b>
             </div>
         </div>
     </div>
 
     <div id="task" class="page">
-        <div class="header"><h3>Task Center</h3></div>
+        <div class="header"><h3>Daily Tasks</h3></div>
         <div class="container">
             <div class="task-item" onclick="openFBModal()">
                 <div style="display:flex; align-items:center; gap:15px;">
@@ -100,7 +96,7 @@
             <div class="task-item" onclick="watchAd()">
                 <div style="display:flex; align-items:center; gap:15px;">
                     <div class="icon-box" style="background: #f39c12;"><i class="fas fa-play"></i></div>
-                    <div><b>Video Ads</b><br><small>Auto reward 4 cents</small></div>
+                    <div><b>Watch Video Ads</b><br><small>Auto Reward $0.04</small></div>
                 </div>
                 <b style="color: #2ecc71;">$0.04</b>
             </div>
@@ -111,72 +107,66 @@
         <div class="header"><h3>Referral System</h3></div>
         <div class="container" style="text-align:center;">
             <i class="fas fa-gift" style="font-size:60px; color:var(--primary);"></i>
-            <h2>Invite Friends</h2>
-            <p style="color:#aaa;">প্রতিটি রেফারের জন্য আপনি পাবেন <b>$3</b> এবং আপনার বন্ধু পাবে <b>$2</b> বোনাস!</p>
-            <div class="refer-box">
-                <small>Your Refer Code:</small>
-                <h3 id="referCode" style="margin:5px 0; color:var(--primary);">SIFAT786</h3>
-                <button class="btn" onclick="copyRefer()">Copy Code</button>
+            <h2>Invite & Earn</h2>
+            <p style="color:#aaa;">আপনার বন্ধু একাউন্ট খুললে আপনি পাবেন <b>$3</b> এবং আপনার বন্ধু পাবে <b>$2</b> বোনাস!</p>
+            <div style="background: #ffffff0d; padding: 20px; border-radius: 15px; border: 1px dashed var(--primary);">
+                <small>Your Promo Code:</small>
+                <h2 style="margin:5px 0; color:var(--primary);">SIFAT_MR_786</h2>
+                <button class="btn" onclick="alert('Code Copied!')">COPY CODE</button>
             </div>
         </div>
     </div>
 
     <div id="wallet" class="page">
-        <div class="header"><h3>Withdraw Funds</h3></div>
+        <div class="header"><h3>Withdraw</h3></div>
         <div class="container">
             <div class="task-item">
-                <b>Your Balance:</b>
-                <b style="color:var(--primary); font-size:20px;">$<span id="wBalance">2.00</span></b>
+                <b>Total Balance:</b>
+                <b style="color:var(--primary); font-size:22px;">$<span id="wBalance">2.00</span></b>
             </div>
-            <div class="form-card" style="margin-top:20px;">
-                <label>Method:</label>
+            <div class="form-card">
+                <label>Select Method:</label>
                 <select id="payMethod">
                     <option>Bkash</option>
                     <option>Nagad</option>
                     <option>Rocket</option>
                 </select>
-                <input type="number" id="payNum" placeholder="Phone Number">
+                <input type="number" id="payNum" placeholder="Account Number">
                 <input type="number" id="payAmt" placeholder="Amount (Min $50)">
-                <button class="btn" onclick="submitWithdraw()">Submit Request</button>
+                <button class="btn" onclick="submitWithdraw()">SUBMIT WITHDRAW</button>
             </div>
         </div>
     </div>
 
     <div id="support" class="page">
-        <div class="header"><h3>Help & Support</h3></div>
+        <div class="header"><h3>Support Center</h3></div>
         <div class="container">
             <div class="task-item" onclick="window.open('https://t.me/Tech910erning')">
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <i class="fab fa-telegram" style="color:#0088cc; font-size:30px;"></i>
-                    <b>Support Channel</b>
-                </div>
+                <i class="fab fa-telegram" style="color:#0088cc; font-size:25px;"></i>
+                <b>Support Channel</b>
             </div>
             <div class="task-item" onclick="window.open('https://t.me/bdearning2764')">
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <i class="fab fa-telegram-plane" style="color:#229ED9; font-size:30px;"></i>
-                    <b>Join Channel</b>
-                </div>
+                <i class="fab fa-telegram-plane" style="color:#229ED9; font-size:25px;"></i>
+                <b>Join Updates</b>
             </div>
             <div class="task-item" onclick="window.open('https://www.youtube.com/@ItsMeSifatMr')">
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <i class="fab fa-youtube" style="color:#ff0000; font-size:30px;"></i>
-                    <b>YouTube Subscribe</b>
-                </div>
+                <i class="fab fa-youtube" style="color:#ff0000; font-size:25px;"></i>
+                <b>Subscribe Youtube</b>
             </div>
         </div>
     </div>
 
     <div id="fbModal" class="modal">
         <div class="form-card">
-            <h3 style="margin-top:0; color:var(--primary);">Facebook Task</h3>
-            <p style="font-size:12px; color:#aaa;">নিচের লিঙ্কে গিয়ে লাইক দিন এবং একটি স্ক্রিনশট আপলোড করুন।</p>
-            <button class="btn" style="background:#1877f2;" onclick="window.open('YOUR_FB_PAGE_LINK')">Open Facebook</button>
-            <div style="margin-top:20px;">
-                <label>Upload Screenshot Proof:</label>
+            <h3 style="margin-top:0;">FB Task Submission</h3>
+            <p style="font-size:12px; color:#aaa;">পেজে লাইক দিয়ে স্ক্রিনশট আপলোড করুন।</p>
+            <button class="btn" style="background:#1877f2;" onclick="window.open('https://www.facebook.com/ItsMeSifatMr')">GO TO FACEBOOK</button>
+            <div style="margin-top:15px;">
+                <label>Upload Screenshot:</label>
                 <input type="file" id="proofImg" accept="image/*">
             </div>
-            <button class="btn" onclick="submitFBProof()">Submit Proof</button>
-            <button class="btn" style="background:transparent; border:1px solid #444;" onclick="closeFBModal()">Cancel</button>
+            <button class="btn" onclick="submitFBProof()">SUBMIT PROOF</button>
+            <button class="btn" style="background:transparent; border:1px solid #444;" onclick="closeFBModal()">CANCEL</button>
         </div>
     </div>
 
@@ -188,7 +178,8 @@
     </nav>
 
     <script>
-        let balance = 2.00; // নতুন ইউজার বোনাস $2
+        let balance = 2.00; 
+        const MONETAG_LINK = "https://prmnode.com/pfe/current/tag.min.js?z=8397135";
 
         function showPage(pageId, element) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
@@ -200,11 +191,10 @@
         }
 
         function watchAd() {
-            // আপনার Monetag Direct Link এখানে দিন
-            window.open('YOUR_MONETAG_LINK', '_blank');
+            window.open(MONETAG_LINK, '_blank');
             balance += 0.04;
             updateBalance();
-            alert("অভিনন্দন! আপনি ০.০৪ ডলার রিওয়ার্ড পেয়েছেন।");
+            alert("অভিনন্দন! আপনি $0.04 রিওয়ার্ড পেয়েছেন।");
         }
 
         function updateBalance() {
@@ -216,25 +206,22 @@
         function closeFBModal() { document.getElementById('fbModal').style.display = 'none'; }
 
         function submitFBProof() {
-            let file = document.getElementById('proofImg').value;
-            if(!file) { alert("দয়া করে স্ক্রিনশট সিলেক্ট করুন।"); return; }
-            alert("আপনার প্রুফ জমা হয়েছে। এডমিন চেক করে ব্যালেন্স যোগ করে দিবে।");
+            if(!document.getElementById('proofImg').value) { alert("স্ক্রিনশট দিন!"); return; }
+            alert("আপনার প্রুফ জমা হয়েছে। এডমিন চেক করে ব্যালেন্স যোগ করে দেবে।");
             closeFBModal();
         }
 
         function submitWithdraw() {
             let amt = parseFloat(document.getElementById('payAmt').value);
             if(amt < 50) {
-                alert("দুঃখিত! সর্বনিম্ন ৫০ ডলার না হলে উইথড্র দেওয়া সম্ভব নয়। আরও কাজ করুন।");
+                alert("আপনার উইথড্র পেন্ডিং এ আছে ২৪ ঘন্টা অথবা ৪৮ ঘন্টার মধ্যে পেমেন্ট পেয়ে যাবেন ধন্যবাদ"); // শর্ত সাপেক্ষে মেসেজ
+                // এখানে যদি আপনি কঠোরভাবে আটকাতে চান তবে নিচের লেখাটি ব্যবহার করতে পারেন:
+                // alert("দুঃখিত! সর্বনিম্ন ৫০ ডলার না হলে উইথড্র দেওয়া সম্ভব নয়।");
             } else if(amt > balance) {
-                alert("আপনার ব্যালেন্সে পর্যাপ্ত ডলার নেই।");
+                alert("ব্যালেন্স কম আছে।");
             } else {
-                alert("আপনার উইথড্র পেন্ডিং এ আছে। ২৪ ঘণ্টা অথবা ৪৮ ঘন্টার মধ্যে পেমেন্ট পেয়ে যাবেন। ধন্যবাদ!");
+                alert("আপনার উইথড্র পেন্ডিং এ আছে ২৪ ঘন্টা অথবা ৪৮ ঘন্টার মধ্যে পেমেন্ট পেয়ে যাবেন ধন্যবাদ");
             }
-        }
-
-        function copyRefer() {
-            alert("Refer Code Copied: SIFAT786");
         }
     </script>
 </body>
