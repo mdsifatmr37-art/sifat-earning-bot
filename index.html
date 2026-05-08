@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,98 +10,133 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #ff00cc; --secondary: #3333ff; --bg: #0d0128; --card: #1a1a2e; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: white; margin: 0; overflow-x: hidden; }
-        .page { display: none; padding-bottom: 100px; animation: fadeIn 0.3s; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: white; margin: 0; padding-bottom: 80px; }
+        
+        .page { display: none; animation: fadeIn 0.3s; }
         .active-page { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .header { padding: 25px 20px; text-align: center; }
+        /* Header Section */
+        .user-header { padding: 20px; display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 50px; height: 50px; border-radius: 50%; background: #444; border: 2px solid var(--primary); }
+
+        /* Balance Card */
         .balance-card {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            margin: 0 20px; padding: 30px; border-radius: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5); position: relative;
+            margin: 0 20px; padding: 25px; border-radius: 20px; text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
-        .balance-amount { font-size: 45px; font-weight: bold; margin: 5px 0; }
+        .balance-amount { font-size: 35px; font-weight: bold; }
+        .action-btns { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+        .mini-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 10px; font-size: 13px; cursor: pointer; }
 
-        .container { padding: 20px; }
-        .task-item {
-            background: var(--card); padding: 15px; border-radius: 15px;
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 12px; border: 1px solid #ffffff1a; transition: 0.2s; cursor: pointer;
+        /* Grid Layout for Work */
+        .work-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 12px; padding: 20px;
         }
-        .icon-box { width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-
-        .btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white; border: none; padding: 15px; width: 100%;
-            border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 10px;
+        .grid-item {
+            background: var(--card); padding: 15px 5px; border-radius: 15px;
+            text-align: center; border: 1px solid #ffffff1a; cursor: pointer;
         }
+        .grid-item i { font-size: 24px; margin-bottom: 8px; display: block; }
+        .grid-item span { font-size: 11px; font-weight: 400; color: #ccc; }
 
+        /* Navigation Bar */
         .nav-bar {
             position: fixed; bottom: 0; width: 100%; background: #161625;
-            display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #333;
+            display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333;
         }
-        .nav-link { color: #888; text-decoration: none; font-size: 11px; text-align: center; cursor: pointer; }
+        .nav-link { color: #888; text-decoration: none; font-size: 11px; text-align: center; cursor: pointer; border: none; background: none; }
         .nav-link.active { color: var(--primary); }
-        .nav-link i { font-size: 20px; margin-bottom: 5px; }
+        .nav-link i { font-size: 20px; margin-bottom: 3px; }
+
+        .support-item {
+            background: var(--card); margin: 10px 20px; padding: 15px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: space-between;
+        }
     </style>
 </head>
 <body>
 
     <div id="home" class="page active-page">
-        <div class="header">
-            <h2 style="margin:0;">Sifat MR Earning</h2>
+        <div class="user-header">
+            <div class="avatar"></div>
+            <div>Welcome, <b>sifat008</b> ✅</div>
         </div>
+        
         <div class="balance-card">
-            <small style="opacity:0.8;">Balance</small>
-            <div class="balance-amount">$<span id="mainBalance">2.00</span></div>
-            <button class="btn" onclick="showPage('task')">Start Earning</button>
+            <small>Available Balance</small>
+            <div class="balance-amount">$<span id="mainBalance">54.50</span></div>
+            <div class="action-btns">
+                <button class="mini-btn"><i class="fas fa-gift"></i> Bonus</button>
+                <button class="mini-btn" onclick="showPage('wallet')"><i class="fas fa-wallet"></i> Withdraw</button>
+            </div>
         </div>
-    </div>
 
-    <div id="task" class="page">
-        <div class="header"><h3>Task Center</h3></div>
-        <div class="container">
-            <div class="task-item" onclick="watchAd()">
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <div class="icon-box" style="background: #f39c12;"><i class="fas fa-play"></i></div>
-                    <div><b>Watch Video Ads</b><br><small>Click to Earn $0.04</small></div>
-                </div>
-                <b style="color: #2ecc71;">$0.04</b>
+        <div class="work-grid">
+            <div class="grid-item" onclick="handleWork('Facebook')">
+                <i class="fab fa-facebook" style="color: #1877f2;"></i>
+                <span>Facebook</span>
+            </div>
+            <div class="grid-item" onclick="handleWork('Telegram')">
+                <i class="fab fa-telegram" style="color: #0088cc;"></i>
+                <span>Telegram</span>
+            </div>
+            <div class="grid-item" onclick="handleWork('Youtube')">
+                <i class="fab fa-youtube" style="color: #ff0000;"></i>
+                <span>Youtube</span>
+            </div>
+            <div class="grid-item" onclick="handleWork('TikTok')">
+                <i class="fab fa-tiktok"></i>
+                <span>TikTok</span>
+            </div>
+            <div class="grid-item" onclick="handleWork('Bonus')">
+                <i class="fas fa-calendar-check" style="color: #f1c40f;"></i>
+                <span>Daily Bonus</span>
+            </div>
+            <div class="grid-item" onclick="handleWork('Refer')">
+                <i class="fas fa-users" style="color: #a29bfe;"></i>
+                <span>Refer</span>
             </div>
         </div>
     </div>
 
+    <div id="support" class="page">
+        <h3 style="text-align:center; margin-top:30px;">Support Center</h3>
+        <div class="support-item"><span><i class="fab fa-telegram"></i> Support Channel</span> <i class="fas fa-chevron-right"></i></div>
+        <div class="support-item"><span><i class="fab fa-youtube"></i> Subscribe Youtube</span> <i class="fas fa-chevron-right"></i></div>
+    </div>
+
     <nav class="nav-bar">
-        <div class="nav-link active" onclick="showPage('home', this)"><i class="fas fa-home"></i><br>Home</div>
-        <div class="nav-link" onclick="showPage('task', this)"><i class="fas fa-tasks"></i><br>Work</div>
+        <button class="nav-link active" onclick="showPage('home', this)"><i class="fas fa-home"></i><br>Home</button>
+        <button class="nav-link" onclick="showPage('home', this)"><i class="fas fa-tasks"></i><br>Work</button>
+        <button class="nav-link" onclick="showPage('wallet', this)"><i class="fas fa-wallet"></i><br>Wallet</button>
+        <button class="nav-link" onclick="showPage('support', this)"><i class="fas fa-headset"></i><br>Support</button>
     </nav>
 
     <script>
-        let balance = 2.00;
+        let balance = 54.50;
 
         function showPage(pageId, element) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(pageId).classList.add('active-page');
+            const targetPage = document.getElementById(pageId);
+            if(targetPage) targetPage.classList.add('active-page');
+
             if(element) {
                 document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
                 element.classList.add('active');
             }
         }
 
-        function updateBalance() {
-            document.getElementById('mainBalance').innerText = balance.toFixed(2);
-        }
-
-        function watchAd() {
-            // আপনার Monetag Direct Link ID 10979048 এখানে সেট করা হয়েছে
-            window.location.href = "https://prmnode.com/pfe/current/tag.min.js?z=10979048"; 
+        function handleWork(type) {
+            alert(type + " Work Loading...");
+            // এখানে আপনার Monetag লিঙ্ক বসাতে পারেন
+            window.open("https://prmnode.com/pfe/current/tag.min.js?z=10979048", "_blank");
             
-            balance += 0.04;
-            updateBalance();
-            alert("অভিনন্দন! আপনি $0.04 রিওয়ার্ড পেয়েছেন।");
+            balance += 0.05;
+            document.getElementById('mainBalance').innerText = balance.toFixed(2);
         }
     </script>
 </body>
 </html>
-
