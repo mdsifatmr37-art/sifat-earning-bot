@@ -5,125 +5,237 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sifat MR Earning App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary-gradient: linear-gradient(135deg, #ff00cc, #3333ff); --card-bg: #ffffff1a; }
-        body { font-family: 'Poppins', sans-serif; background-color: #0d0128; color: white; margin: 0; overflow-x: hidden; }
-        
-        /* Profile Header */
-        .header { padding: 20px; display: flex; align-items: center; gap: 15px; }
-        .profile-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #ff00cc; padding: 2px; }
-        .user-info h2 { margin: 0; font-size: 18px; }
-        .verified { color: #00f2fe; font-size: 14px; }
+        :root { --primary: #ff00cc; --secondary: #3333ff; --bg: #0d0128; --card: #1a1a2e; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: white; margin: 0; overflow-x: hidden; }
+        .page { display: none; padding-bottom: 100px; animation: fadeIn 0.3s; }
+        .active-page { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Balance Card */
+        /* Header & Balance */
+        .header { padding: 25px 20px; text-align: center; }
         .balance-card {
-            background: var(--primary-gradient);
-            margin: 0 20px; padding: 25px; border-radius: 25px;
-            text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            margin: 0 20px; padding: 30px; border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); position: relative;
         }
-        .balance-amount { font-size: 40px; font-weight: bold; margin: 10px 0; }
-        .btn-group { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
-        .main-btn { background: #ffffff33; border: none; padding: 10px 20px; border-radius: 30px; color: white; font-weight: bold; cursor: pointer; backdrop-filter: blur(5px); }
+        .balance-amount { font-size: 45px; font-weight: bold; margin: 5px 0; }
 
-        /* Grid System */
-        .work-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 15px; padding: 20px;
+        /* Grid & Lists */
+        .container { padding: 20px; }
+        .task-item {
+            background: var(--card); padding: 15px; border-radius: 15px;
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 12px; border: 1px solid #ffffff1a; transition: 0.2s;
         }
-        .work-item {
-            background: var(--card-bg); padding: 20px 10px;
-            border-radius: 15px; text-align: center;
-            border: 1px solid #ffffff1a; transition: 0.3s;
+        .task-item:active { transform: scale(0.98); }
+        .icon-box { width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+
+        /* Forms & Modals */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 1000; padding: 20px; box-sizing: border-box;
         }
-        .work-item i { font-size: 24px; margin-bottom: 10px; display: block; }
-        .work-item span { font-size: 12px; font-weight: 500; }
-        .facebook { color: #1877f2; } .youtube { color: #ff0000; } .telegram { color: #0088cc; } .tiktok { color: #010101; background: white; border-radius: 5px; padding: 2px; }
+        .form-card { background: var(--card); padding: 25px; border-radius: 20px; margin-top: 50px; }
+        input, select {
+            width: 100%; padding: 12px; margin: 10px 0; background: #00000033;
+            border: 1px solid #444; color: white; border-radius: 10px; box-sizing: border-box;
+        }
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; border: none; padding: 15px; width: 100%;
+            border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 10px;
+        }
 
         /* Bottom Nav */
         .nav-bar {
-            position: fixed; bottom: 0; width: 100%;
-            background: #1a1a2e; display: flex;
-            justify-content: space-around; padding: 15px 0;
-            border-top: 1px solid #333;
+            position: fixed; bottom: 0; width: 100%; background: #161625;
+            display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #333;
         }
-        .nav-link { color: #888; text-decoration: none; font-size: 12px; text-align: center; }
-        .nav-link.active { color: #ff00cc; }
-        .center-btn {
-            background: #ff00cc; width: 55px; height: 55px;
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; margin-top: -35px; border: 5px solid #0d0128;
-        }
+        .nav-link { color: #888; text-decoration: none; font-size: 11px; text-align: center; cursor: pointer; }
+        .nav-link.active { color: var(--primary); }
+        .nav-link i { font-size: 20px; margin-bottom: 5px; }
+
+        /* Utility */
+        .refer-box { background: #ffffff0d; padding: 15px; border-radius: 10px; border: 1px dashed var(--primary); margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <img src="https://i.ibb.co/vz6K2Yv/avatar.png" class="profile-img">
-        <div class="user-info">
-            <h2>Welcome, sifat008 <i class="fas fa-check-circle verified"></i></h2>
+    <div id="home" class="page active-page">
+        <div class="header">
+            <h2 style="margin:0;">Sifat MR Earning</h2>
+            <p style="opacity:0.6; font-size:12px;">Earn real dollars daily</p>
+        </div>
+        <div class="balance-card">
+            <small style="opacity:0.8;">Current Balance (Sign up Bonus $2)</small>
+            <div class="balance-amount">$<span id="mainBalance">2.00</span></div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn" style="background:#ffffff22;" onclick="showPage('task')">Start Work</button>
+                <button class="btn" onclick="showPage('wallet')">Withdraw</button>
+            </div>
+        </div>
+        <div class="container">
+            <div class="task-item" onclick="showPage('refer')">
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <div class="icon-box" style="background: #9b59b6;"><i class="fas fa-users"></i></div>
+                    <div><b>Refer & Earn</b><br><small>Get $3 per referral</small></div>
+                </div>
+                <b style="color: #2ecc71;">$3.00</b>
+            </div>
         </div>
     </div>
 
-    <div class="balance-card">
-        <div style="font-size: 14px; opacity: 0.8;">Available Balance</div>
-        <div class="balance-amount">$<span id="userBalance">54.50</span> <small style="font-size: 16px;">USD</small></div>
-        <div class="btn-group">
-            <button class="main-btn">🎁 Bonus</button>
-            <button class="main-btn">💳 Withdraw</button>
+    <div id="task" class="page">
+        <div class="header"><h3>Task Center</h3></div>
+        <div class="container">
+            <div class="task-item" onclick="openFBModal()">
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <div class="icon-box" style="background: #1877f2;"><i class="fab fa-facebook-f"></i></div>
+                    <div><b>Facebook Work</b><br><small>Like & Submit Proof</small></div>
+                </div>
+                <b style="color: #2ecc71;">$0.10</b>
+            </div>
+            <div class="task-item" onclick="watchAd()">
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <div class="icon-box" style="background: #f39c12;"><i class="fas fa-play"></i></div>
+                    <div><b>Video Ads</b><br><small>Auto reward 4 cents</small></div>
+                </div>
+                <b style="color: #2ecc71;">$0.04</b>
+            </div>
         </div>
     </div>
 
-    <div style="padding: 10px 20px; display: flex; justify-content: space-between; font-size: 13px; font-weight: bold;">
-        <span><i class="fas fa-briefcase"></i> Commission</span>
-        <span style="color: #ff00cc;"><i class="fas fa-sync"></i> Spin & Win</span>
+    <div id="refer" class="page">
+        <div class="header"><h3>Referral System</h3></div>
+        <div class="container" style="text-align:center;">
+            <i class="fas fa-gift" style="font-size:60px; color:var(--primary);"></i>
+            <h2>Invite Friends</h2>
+            <p style="color:#aaa;">প্রতিটি রেফারের জন্য আপনি পাবেন <b>$3</b> এবং আপনার বন্ধু পাবে <b>$2</b> বোনাস!</p>
+            <div class="refer-box">
+                <small>Your Refer Code:</small>
+                <h3 id="referCode" style="margin:5px 0; color:var(--primary);">SIFAT786</h3>
+                <button class="btn" onclick="copyRefer()">Copy Code</button>
+            </div>
+        </div>
     </div>
 
-    <div class="work-grid">
-        <div class="work-item" onclick="alert('Facebook Work Loading...')">
-            <i class="fab fa-facebook facebook"></i>
-            <span>Facebook Work</span>
+    <div id="wallet" class="page">
+        <div class="header"><h3>Withdraw Funds</h3></div>
+        <div class="container">
+            <div class="task-item">
+                <b>Your Balance:</b>
+                <b style="color:var(--primary); font-size:20px;">$<span id="wBalance">2.00</span></b>
+            </div>
+            <div class="form-card" style="margin-top:20px;">
+                <label>Method:</label>
+                <select id="payMethod">
+                    <option>Bkash</option>
+                    <option>Nagad</option>
+                    <option>Rocket</option>
+                </select>
+                <input type="number" id="payNum" placeholder="Phone Number">
+                <input type="number" id="payAmt" placeholder="Amount (Min $50)">
+                <button class="btn" onclick="submitWithdraw()">Submit Request</button>
+            </div>
         </div>
-        <div class="work-item">
-            <i class="fas fa-globe telegram"></i>
-            <span>Otoeb</span>
+    </div>
+
+    <div id="support" class="page">
+        <div class="header"><h3>Help & Support</h3></div>
+        <div class="container">
+            <div class="task-item" onclick="window.open('https://t.me/Tech910erning')">
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <i class="fab fa-telegram" style="color:#0088cc; font-size:30px;"></i>
+                    <b>Support Channel</b>
+                </div>
+            </div>
+            <div class="task-item" onclick="window.open('https://t.me/bdearning2764')">
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <i class="fab fa-telegram-plane" style="color:#229ED9; font-size:30px;"></i>
+                    <b>Join Channel</b>
+                </div>
+            </div>
+            <div class="task-item" onclick="window.open('https://www.youtube.com/@ItsMeSifatMr')">
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <i class="fab fa-youtube" style="color:#ff0000; font-size:30px;"></i>
+                    <b>YouTube Subscribe</b>
+                </div>
+            </div>
         </div>
-        <div class="work-item">
-            <i class="fab fa-telegram telegram"></i>
-            <span>Telegram</span>
-        </div>
-        <div class="work-item">
-            <i class="fab fa-tiktok tiktok"></i>
-            <span>Tiktok Work</span>
-        </div>
-        <div class="work-item">
-            <i class="fab fa-youtube youtube"></i>
-            <span>Youtube</span>
-        </div>
-        <div class="work-item">
-            <i class="fas fa-calendar-check" style="color: #f39c12;"></i>
-            <span>Daily Bonus</span>
-        </div>
-        <div class="work-item">
-            <i class="fas fa-poll" style="color: #2ecc71;"></i>
-            <span>Surveys</span>
-        </div>
-        <div class="work-item">
-            <i class="fas fa-robot" style="color: #9b59b6;"></i>
-            <span>AI Bot</span>
-        </div>
-        <div class="work-item">
-            <i class="fas fa-users" style="color: #34495e;"></i>
-            <span>Refer</span>
+    </div>
+
+    <div id="fbModal" class="modal">
+        <div class="form-card">
+            <h3 style="margin-top:0; color:var(--primary);">Facebook Task</h3>
+            <p style="font-size:12px; color:#aaa;">নিচের লিঙ্কে গিয়ে লাইক দিন এবং একটি স্ক্রিনশট আপলোড করুন।</p>
+            <button class="btn" style="background:#1877f2;" onclick="window.open('YOUR_FB_PAGE_LINK')">Open Facebook</button>
+            <div style="margin-top:20px;">
+                <label>Upload Screenshot Proof:</label>
+                <input type="file" id="proofImg" accept="image/*">
+            </div>
+            <button class="btn" onclick="submitFBProof()">Submit Proof</button>
+            <button class="btn" style="background:transparent; border:1px solid #444;" onclick="closeFBModal()">Cancel</button>
         </div>
     </div>
 
     <nav class="nav-bar">
-        <a href="#" class="nav-link active"><i class="fas fa-home"></i><br>Home</a>
-        <a href="#" class="nav-link"><i class="fas fa-store"></i><br>Shop</a>
-        <div class="center-btn"><i class="fas fa-wallet" style="color: white; font-size: 20px;"></i></div>
-        <a href="#" class="nav-link"><i class="fas fa-headset"></i><br>Support</a>
-        <a href="#" class="nav-link"><i class="fas fa-user"></i><br>Profile</a>
+        <div class="nav-link active" onclick="showPage('home', this)"><i class="fas fa-home"></i><br>Home</div>
+        <div class="nav-link" onclick="showPage('task', this)"><i class="fas fa-tasks"></i><br>Work</div>
+        <div class="nav-link" onclick="showPage('wallet', this)"><i class="fas fa-wallet"></i><br>Wallet</div>
+        <div class="nav-link" onclick="showPage('support', this)"><i class="fas fa-headset"></i><br>Support</div>
     </nav>
 
+    <script>
+        let balance = 2.00; // নতুন ইউজার বোনাস $2
+
+        function showPage(pageId, element) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(pageId).classList.add('active-page');
+            if(element) {
+                document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+                element.classList.add('active');
+            }
+        }
+
+        function watchAd() {
+            // আপনার Monetag Direct Link এখানে দিন
+            window.open('YOUR_MONETAG_LINK', '_blank');
+            balance += 0.04;
+            updateBalance();
+            alert("অভিনন্দন! আপনি ০.০৪ ডলার রিওয়ার্ড পেয়েছেন।");
+        }
+
+        function updateBalance() {
+            document.getElementById('mainBalance').innerText = balance.toFixed(2);
+            document.getElementById('wBalance').innerText = balance.toFixed(2);
+        }
+
+        function openFBModal() { document.getElementById('fbModal').style.display = 'block'; }
+        function closeFBModal() { document.getElementById('fbModal').style.display = 'none'; }
+
+        function submitFBProof() {
+            let file = document.getElementById('proofImg').value;
+            if(!file) { alert("দয়া করে স্ক্রিনশট সিলেক্ট করুন।"); return; }
+            alert("আপনার প্রুফ জমা হয়েছে। এডমিন চেক করে ব্যালেন্স যোগ করে দিবে।");
+            closeFBModal();
+        }
+
+        function submitWithdraw() {
+            let amt = parseFloat(document.getElementById('payAmt').value);
+            if(amt < 50) {
+                alert("দুঃখিত! সর্বনিম্ন ৫০ ডলার না হলে উইথড্র দেওয়া সম্ভব নয়। আরও কাজ করুন।");
+            } else if(amt > balance) {
+                alert("আপনার ব্যালেন্সে পর্যাপ্ত ডলার নেই।");
+            } else {
+                alert("আপনার উইথড্র পেন্ডিং এ আছে। ২৪ ঘণ্টা অথবা ৪৮ ঘন্টার মধ্যে পেমেন্ট পেয়ে যাবেন। ধন্যবাদ!");
+            }
+        }
+
+        function copyRefer() {
+            alert("Refer Code Copied: SIFAT786");
+        }
+    </script>
 </body>
 </html>
