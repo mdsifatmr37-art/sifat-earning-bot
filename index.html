@@ -1,213 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sifat MR Earning App</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Sifat Payment App</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-        :root {
-            --primary: #ff00cc;
-            --secondary: #3333ff;
-            --bg: #0d0128;
-            --card: #1a1a2e;
-        }
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg);
+            font-family: Arial, sans-serif;
+            background-color: #0d0128;
             color: white;
             margin: 0;
-            padding-bottom: 80px;
-            overflow-x: hidden;
+            padding: 20px;
+            text-align: center;
         }
-        .page { display: none; padding: 20px; animation: fadeIn 0.4s; }
-        .active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Balance Card */
         .balance-card {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(to right, #ff00cc, #3333ff);
             padding: 30px;
             border-radius: 20px;
-            text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
         }
-
-        /* Form Styling */
         .input-group {
-            background: var(--card);
+            background: #1a1a2e;
             padding: 20px;
             border-radius: 15px;
-            border: 1px solid #333;
+            text-align: left;
         }
-        label { display: block; margin-top: 15px; font-size: 14px; color: #ccc; }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #ccc;
+        }
         input, select {
             width: 100%;
             padding: 12px;
-            margin-top: 8px;
+            margin-top: 5px;
             border-radius: 10px;
             border: none;
             background: #0d0128;
             color: white;
             box-sizing: border-box;
-            outline: none;
         }
         .submit-btn {
             width: 100%;
             padding: 15px;
             background: linear-gradient(to right, #ff00cc, #3333ff);
-            border: none;
-            border-radius: 12px;
             color: white;
+            border: none;
+            border-radius: 10px;
+            margin-top: 20px;
             font-weight: bold;
-            margin-top: 25px;
             cursor: pointer;
-            font-size: 16px;
         }
-
-        /* Navigation Bar */
         .nav-bar {
             position: fixed;
             bottom: 0;
+            left: 0;
             width: 100%;
             background: #111;
             display: flex;
             justify-content: space-around;
-            padding: 15px 0;
-            border-top: 1px solid #333;
+            padding: 10px 0;
         }
         .nav-link {
             color: #666;
             font-size: 12px;
-            text-align: center;
-            cursor: pointer;
             text-decoration: none;
         }
-        .nav-link.active { color: var(--primary); }
-        
-        /* History Items */
-        .history-item {
-            background: var(--card);
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 10px;
-            border-left: 4px solid #ffcc00;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .active { color: #ff00cc; }
     </style>
 </head>
 <body>
 
-    <div id="wallet" class="page active-page">
-        <h2 style="text-align:center;">Withdraw Funds</h2>
-        
-        <div class="balance-card">
-            <small>Current Wallet Balance</small>
-            <h1 id="mainBal">$54.50</h1>
-        </div>
+    <h2>Withdraw Funds</h2>
 
-        <div class="input-group">
-            <label><i class="fas fa-university"></i> Payment Method:</label>
-            <select id="method">
-                <option value="BKash">BKash (বিকাশ)</option>
-                <option value="Nagad">Nagad (নগদ)</option>
-            </select>
+    <div class="balance-card">
+        <p>Current Wallet Balance</p>
+        <h1>$54.50</h1>
+    </div>
 
-            <label><i class="fas fa-phone"></i> Account Number:</label>
-            <input type="number" id="accountNumber" placeholder="017XXXXXXXX">
+    <div class="input-group">
+        <label><i class="fa-solid fa-building-columns"></i> Payment Method:</label>
+        <select id="method">
+            <option value="BKash">BKash (বিকাশ)</option>
+            <option value="Nagad">Nagad (নগদ)</option>
+        </select>
 
-            <label><i class="fas fa-dollar-sign"></i> Amount (Minimum $40):</label>
-            <input type="number" id="withdrawAmount" placeholder="Enter Amount (e.g. 40)">
+        <label><i class="fa-solid fa-phone"></i> Account Number:</label>
+        <input type="number" id="accountNumber" placeholder="017XXXXXXXX">
 
-            <button class="submit-btn" onclick="sendWithdrawRequest()">Confirm Withdraw</button>
-        </div>
+        <label><i class="fa-solid fa-dollar-sign"></i> Amount (Minimum $40):</label>
+        <input type="number" id="withdrawAmount" placeholder="Enter amount">
 
-        <h4 style="margin-top:30px;">Transaction History</h4>
-        <div id="paymentHistory">
-            <p id="noHistory" style="color:#666; text-align:center;">No recent transactions.</p>
-        </div>
+        <button class="submit-btn" onclick="sendWithdraw()">Confirm Withdraw</button>
     </div>
 
     <nav class="nav-bar">
-        <div class="nav-link" onclick="location.reload()"><i class="fas fa-home fa-lg"></i><br>Home</div>
-        <div class="nav-link active"><i class="fas fa-wallet fa-lg"></i><br>Wallet</div>
-        <div class="nav-link" onclick="alert('Support: @Tech910erning')"><i class="fas fa-headset fa-lg"></i><br>Support</div>
+        <div class="nav-link"><i class="fa-solid fa-house"></i><br>Home</div>
+        <div class="nav-link active"><i class="fa-solid fa-wallet"></i><br>Wallet</div>
+        <div class="nav-link"><i class="fa-solid fa-headset"></i><br>Support</div>
     </nav>
 
     <script>
-        // --- আপনার টেলিগ্রাম সেটিংস ---
-        const botToken = "8731805358:AAG_JnStDiGKdzAOk6novNkdKz67yTECcnw"; // আপনার নতুন বটের টোকেন
-        const chatId = "@Tech910erning"; // আপনার চ্যানেলের ইউজারনেম
-        let balance = 54.50; // ডামি ব্যালেন্স
+        const botToken = "8731805358:AAG_JnStDiGKdzAOk6novNkdKz67yTECcnw";
+        const chatId = "@Tech910erning";
 
-        function sendWithdrawRequest() {
+        function sendWithdraw() {
             const method = document.getElementById('method').value;
             const number = document.getElementById('accountNumber').value;
-            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const amount = document.getElementById('withdrawAmount').value;
 
-            // ১. ভ্যালিডেশন চেক
-            if (isNaN(amount) || amount < 40) {
-                alert("দুঃখিত! সর্বনিম্ন ৪০ ডলার উইথড্র দিতে হবে।");
-                return;
-            }
-            if (amount > balance) {
-                alert("আপনার একাউন্টে পর্যাপ্ত ব্যালেন্স নেই।");
-                return;
-            }
-            if (number.length < 11) {
-                alert("অনুগ্রহ করে একটি সঠিক বিকাশ বা নগদ নাম্বার দিন।");
+            if(amount < 40) {
+                alert("সর্বনিম্ন ৪০ ডলার লাগবে!");
                 return;
             }
 
-            // ২. টেলিগ্রাম নোটিফিকেশন মেসেজ তৈরি
-            const message = `🚀 *NEW WITHDRAW REQUEST*\n\n` +
-                            `👤 User ID: sifat008\n` +
-                            `💰 Amount: $${amount}\n` +
-                            `💳 Method: ${method}\n` +
-                            `📱 Number: ${number}\n` +
-                            `📅 Date: ${new Date().toLocaleString()}\n\n` +
-                            `✅ *Status: Pending*`;
+            const message = `🚀 NEW WITHDRAW\n💰 Amount: $${amount}\n💳 Method: ${method}\n📱 Number: ${number}`;
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
 
-            // ৩. টেলিগ্রাম এ মেসেজ পাঠানো (API Call)
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
-
-            fetch(url).then(response => {
-                if (response.ok) {
-                    alert("আপনার উইথড্রো রিকোয়েস্টটি সফলভাবে সাবমিট হয়েছে। আগামী ২৪ থেকে ৪৮ ঘণ্টার মধ্যে পেমেন্ট পেয়ে যাবেন।");
-                    
-                    // ব্যালেন্স আপডেট
-                    balance -= amount;
-                    document.getElementById('mainBal').innerText = `$${balance.toFixed(2)}`;
-
-                    // হিস্ট্রি আপডেট
-                    addHistory(amount, method, number);
-                } else {
-                    alert("এরর: বটটি আপনার চ্যানেলে অ্যাডমিন আছে কিনা চেক করুন।");
-                }
-            }).catch(err => {
-                alert("ইন্টারনেট কানেকশন চেক করুন।");
+            fetch(url).then(res => {
+                if(res.ok) alert("সফল হয়েছে! আপনার চ্যানেলে চেক করুন।");
             });
         }
-
-        function addHistory(amt, meth, num) {
-            const historyDiv = document.getElementById('paymentHistory');
-            document.getElementById('noHistory').style.display = 'none';
-            const item = `
-                <div class="history-item">
-                    <div>
-                        <strong>$${amt.toFixed(2)} (${meth})</strong><br>
-                        <small style="color:#aaa;">Target: ${num}</small>
-                    </div>
-                    <span style="color:#ffcc00; font-weight:bold;">Pending</span>
-                </div>
-            `;
-            historyDiv.innerHTML = item + historyDiv.innerHTML;
-        }
     </script>
-
 </body>
 </html>
